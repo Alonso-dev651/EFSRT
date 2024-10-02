@@ -127,7 +127,7 @@ $resultFut = $stmtFut->get_result();
           <div class="especialidad">
             <div class="form-group">
 
-              <button onclick="window.location.href='../formulariodocs/formulariosdocs.php'" class="fut-button">Subir archivos</button>
+              <button onclick="window.location.href='../../formularios/formulariodocs/formulariosdocs.php'" class="fut-button">Subir archivos</button>
               <label for="especialidad">Especialidades</label>
 
               <select id="especialida" name="especialidad" required>
