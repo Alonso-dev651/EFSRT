@@ -101,6 +101,12 @@ if ($result->num_rows > 0) {
             <div style="display: flex; justify-content: center; align-items: center;">
                 <h1>REGISTROS DEL PERSONAL</h1>
             </div>
+            <!-- Botón para registrar nuevo personal -->
+            <div class="fut-navigation">
+                <a href="registrar_personal.php" class="fut-nav-button">
+                <i class="fa-solid fa-address-card"></i> Registrar Personal
+                </a>
+            </div>
             
             <hr>
                 <div class="fut-container">
@@ -130,13 +136,6 @@ if ($result->num_rows > 0) {
                     }
                     ?>
                 </form>
-
-            <!-- Botón para registrar nuevo personal -->
-            <div class="fut-navigation">
-                <a href="registrar_personal.php" class="fut-nav-button">
-                <i class="fa-solid fa-address-card"></i> Registrar Personal
-                </a>
-            </div>
             </div>
 
         </div>
