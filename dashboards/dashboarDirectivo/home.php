@@ -93,7 +93,7 @@ $resultFut = $stmtFut->get_result();
         </li>
         
         <li class="nav-item active">
-          <a href="../dashboardirectivo/home.php">
+          <a href="home.php">
             <i class="fa-solid fa-table nav-icon"></i>
             <span class="nav-text">Tablero</span>
           </a>
