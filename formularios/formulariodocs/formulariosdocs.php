@@ -81,7 +81,7 @@ $conn->close();
         <input type="file" id="archivo_pdf" name="archivo_pdf" accept=".pdf" required><br><br>
 
         <button type="submit" name="submit">Subir Documento</button>
-        <button onclick="window.location.href='../../dashboards/dashboardcoordinador/home.php'" class="fut-button">Cancelar</button>
+        <button onclick="window.location.href='../../dashboards/dashboardCoordinador/home.php'" class="fut-button">Cancelar</button>
     </form>
 </body>
 </html>
