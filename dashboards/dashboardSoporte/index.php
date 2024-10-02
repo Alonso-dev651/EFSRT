@@ -53,16 +53,8 @@ if ($result->num_rows > 0) {
             <div class="user-info">
                 <img src="https://cdn-icons-png.flaticon.com/512/7816/7816916.png" alt="user" />
                 <p>Soporte</p>
-                <p><?php echo isset($nombresPersonal) ? $nombresPersonal . ' ' . $apellidoPaterno . ' ' . $apellidoMaterno : ''; ?></p>
             </div>
             <ul>
-                <li class="nav-item">
-                    <a href="Pages_Dash/user.php">
-                        <i class="fa fa-user nav-icon"></i>
-                        <span class="nav-text">Cuenta</span>
-                    </a>
-                </li> 
-
                 <li class="nav-item active">
                     <a href="index.php">
                         <i class="fa-solid fa-table nav-icon"></i>
