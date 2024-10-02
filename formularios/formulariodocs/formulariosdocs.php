@@ -66,22 +66,86 @@ $conn->close();
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Subir Documento PDF</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0069d9;
+        }
+
+        .fut-button {
+            background-color: #dc3545;
+            margin-left: 10px;
+        }
+
+        .fut-button:hover {
+            background-color: #c82333;
+        }
+    </style>
 </head>
+
 <body>
-    <h2>Subir Documento PDF</h2>
-    <form action="" method="POST" enctype="multipart/form-data">
-        <label for="descripcion">Descripción:</label>
-        <input type="text" id="descripcion" name="descripcion" required><br><br>
+    <div class="container">
+        <h2>Subir Documento PDF</h2>
+        <form action="" method="POST" enctype="multipart/form-data">
+            <label for="descripcion">Descripción:</label>
+            <input type="text" id="descripcion" name="descripcion" required><br><br>
 
-        <label for="archivo_pdf">Seleccionar archivo PDF:</label>
-        <input type="file" id="archivo_pdf" name="archivo_pdf" accept=".pdf" required><br><br>
+            <label for="archivo_pdf">Seleccionar archivo PDF:</label>
+            <input type="file" id="archivo_pdf" name="archivo_pdf" accept=".pdf" required><br><br>
 
-        <button type="submit" name="submit">Subir Documento</button>
-        <button onclick="window.location.href='../../dashboards/dashboardCoordinador/home.php'" class="fut-button">Cancelar</button>
-    </form>
+            <button type="submit" name="submit">Subir Documento</button>
+            <button onclick="window.location.href='../../dashboards/dashboardCoordinador/home.php'" class="fut-button">Cancelar</button>
+        </form>
+    </div>
 </body>
+
 </html>
