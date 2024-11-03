@@ -4,7 +4,7 @@ $codSoli = $_SESSION['codLogin'];
 include 'formulario_fut/php/db_conexion.php';
 
 // Obtener datos del solicitante
-$sqlSolicitante = "SELECT nombres, apPaterno, apMaterno FROM solicitante WHERE codLogin = ?";
+$sqlSolicitante = "SELECT nombres, apPaterno, apMaterno, codEsp FROM solicitante WHERE codLogin = ?";
 $stmtSolicitante = $conexion->prepare($sqlSolicitante);
 $stmtSolicitante->bind_param("i", $codSoli);
 $stmtSolicitante->execute();
@@ -19,12 +19,12 @@ $searchTerm = isset($_POST['search']) ? trim($_POST['search']) : '';
 
 // Consulta para obtener los datos del FUT con o sin filtro de búsqueda
 if (!empty($searchTerm)) {
-  $sqlFut = "SELECT nroFut, anioFut, fecHorIng, solicito, estado FROM fut WHERE nroFut LIKE ?";
+  $sqlFut = "SELECT nroFut, anioFut, fecHorIng, solicito, estado, codEsp FROM fut WHERE nroFut LIKE ?";
   $searchTerm = "%$searchTerm%";
   $stmtFut = $conexion->prepare($sqlFut);
   $stmtFut->bind_param("s", $searchTerm);
 } else {
-  $sqlFut = "SELECT nroFut, anioFut, fecHorIng, solicito, estado FROM fut";
+  $sqlFut = "SELECT nroFut, anioFut, fecHorIng, solicito, estado,codEsp FROM fut";
   $stmtFut = $conexion->prepare($sqlFut);
 }
 
@@ -146,16 +146,38 @@ $resultFut = $stmtFut->get_result();
                 <p><strong>Año FUT:</strong> <?php echo $rowFut['anioFut']; ?></p>
                 <p><strong>Fecha y Hora de Ingreso:</strong> <?php echo $rowFut['fecHorIng']; ?></p>
                 <p><strong>Solicitud:</strong> <?php echo $rowFut['solicito']; ?></p>
-                <p><strong>Estado:</strong> <?php echo $rowFut['estado'] == 'H' ? 'Habilitado' : 'Inhabilitado'; ?></p>
+                <p><strong>Estado:</strong>
+                  <?php
+                    switch ($rowFut['estado']) {
+                      case 'H':
+                        echo 'Habilitado';
+                        break;
+                      case 'A':
+                        echo 'Aprobado';
+                        break;
+                      case 'D':
+                        echo 'Desaprobado';
+                        break;
+                      default:
+                        echo 'Estado desconocido';
+                    }
+                  ?>
+                </p>
               </div>
               <form action="Asignar_fut/index.php" method="post" class="fut-form">
-                <input type="hidden" name="nroFut" value="<?php echo $rowFut['nroFut']; ?>">
-                <input type="hidden" name="anioFut" value="<?php echo $rowFut['anioFut']; ?>">
-                <input type="hidden" name="fecHorIng" value="<?php echo $rowFut['fecHorIng']; ?>">
-                <input type="hidden" name="solicito" value="<?php echo $rowFut['solicito']; ?>">
-                <input type="hidden" name="estado" value="<?php echo $rowFut['estado']; ?>">
-                <button type="submit" class="fut-button">Asignar Docente</button>
-              </form>
+                  <input type="hidden" name="nroFut" value="<?php echo $rowFut['nroFut']; ?>">
+                  <input type="hidden" name="anioFut" value="<?php echo $rowFut['anioFut']; ?>">
+                  <input type="hidden" name="fecHorIng" value="<?php echo $rowFut['fecHorIng']; ?>">
+                  <input type="hidden" name="solicito" value="<?php echo $rowFut['solicito']; ?>">
+                  <input type="hidden" name="estado" value="<?php echo $rowFut['estado']; ?>">
+                  <input type="hidden" name="codCoordinador" value="<?php echo $codSoli; ?>">
+                
+                  <?php if ($rowFut['codEsp'] == 0): ?>
+                    <button type="submit" class="fut-button">Asignar Docente</button>
+                  <?php else: ?>
+                    <button type="button" class="fut-button" disabled>Docente ya asignado</button>
+                  <?php endif; ?>
+                </form>
             </div>
           <?php } ?>
         </div>

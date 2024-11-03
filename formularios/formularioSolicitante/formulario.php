@@ -1,19 +1,22 @@
 <?php
-var_dump($_POST); // Esto te mostrará todos los datos enviados
+session_start(); // Iniciar sesión
+$codLogin = $_SESSION['codLogin'];
+// Esto te mostrará todos los datos enviados
+//var_dump($_POST);
 
 include "php/db_conexion.php";
 
 // Obtener el último valor de la columna codLogin
-$sqlLastLogin = "SELECT codLogin FROM login ORDER BY codLogin DESC LIMIT 1";
-$resultLastLogin = $conexion->query($sqlLastLogin);
+// $sqlLastLogin = "SELECT codLogin FROM login ORDER BY codLogin DESC LIMIT 1";
+// $resultLastLogin = $conexion->query($sqlLastLogin);
 
-if ($resultLastLogin->num_rows > 0) {
-    $rowLastLogin = $resultLastLogin->fetch_assoc();
-    $codLogin = $rowLastLogin['codLogin'];
-} else {
-    echo "No se encontró ningún registro en la tabla login.";
-    exit();
-}
+// if ($resultLastLogin->num_rows > 0) {
+//    $rowLastLogin = $resultLastLogin->fetch_assoc();
+//    $codLogin = $rowLastLogin['codLogin'];
+// } else {
+//    echo "No se encontró ningún registro en la tabla login.";
+//    exit();
+// }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Recoger los datos del formulario
@@ -53,7 +56,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $anioEgreso = $_POST['anioEgreso'] ?? '';
 
     // Verificar el valor de codEsp
-    var_dump($codEsp); // Para asegurarte de que estás recibiendo el valor
 
     try {
         // Preparar la consulta SQL
@@ -92,17 +94,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="hidden" name="anioEgreso" value="' . htmlspecialchars($anioEgreso) . '">
                 <button type="submit">Generar Reporte PDF</button>
             </form>';
+            ?>
+            <button type="button" onclick="window.location.href='../../'">Iniciar sesion con su nueva cuenta</button>
+            <?php
             
         }
         else {
             throw new Exception("Error al enviar la solicitud: " . $stmt->error);
+            ?>
+            <button type="button" onclick="window.location.href='../../'">Vuelva a intentarlo</button>
+            <?php
         }
         
 
         // Cerrar la declaración
         $stmt->close();
     } catch (Exception $e) {
+        echo '<h1>Error al realizar la solicitud</h1>';
         echo "Excepción capturada: " . $e->getMessage();
+        ?>
+        <button type="button" onclick="window.location.href='../../'">Vuelva a intentarlo</button>
+        <?php
     } finally {
         // Cerrar la conexión
         $conexion->close();
@@ -112,5 +124,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 ?>
-<button type="button" onclick="window.location.href='../../'">Iniciar sesion con nueva cuenta</button> 
 

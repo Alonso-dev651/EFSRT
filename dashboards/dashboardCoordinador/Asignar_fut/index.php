@@ -3,6 +3,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 session_start();
+$codCoordinador = $_SESSION['codLogin'];
 include '../formulario_fut/php/db_conexion.php';
 
 if ($conexion->connect_error) {
@@ -17,7 +18,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $estado = $_POST['estado'];
 }
 
-$sqlDocente = "SELECT codLogin, usuLogin FROM login WHERE tipoLogin = 'DOCENTE'";
+// Obtener datos de aea
+$sqlCodSoli= "SELECT codSoli FROM fut WHERE nroFut = ?";
+$stmtCodSoli = $conexion->prepare($sqlCodSoli);
+$stmtCodSoli->bind_param("i", $nroFut);
+$stmtCodSoli->execute();
+$resultCodSoli = $stmtCodSoli->get_result();
+$rowCodSoli = $resultCodSoli->fetch_assoc();
+
+$codSoli = $rowCodSoli['codSoli'];
+
+
+// Obtener datos de especialidad
+$sqlEspecialidad= "SELECT codEsp FROM solicitante WHERE codLogin = ?";
+$stmtEspecialidad = $conexion->prepare($sqlEspecialidad);
+$stmtEspecialidad->bind_param("i", $codSoli);
+$stmtEspecialidad->execute();
+$resultEspecialidad = $stmtEspecialidad->get_result();
+$rowEspecialidad = $resultEspecialidad->fetch_assoc();
+
+$codEspecialidad = $rowEspecialidad['codEsp'];
+
+$sqlDocente = "SELECT codLogin, correoJP FROM personal WHERE tipoPer = 'DOCENTE' and codEsp = '$codEspecialidad'";
 $resultDocente = $conexion->query($sqlDocente);
 
 if (!$resultDocente) {
@@ -27,7 +49,7 @@ if (!$resultDocente) {
 // Obtener datos del solicitante
 $sqlSolicitante = "SELECT nombres, apPaterno, apMaterno FROM solicitante WHERE codLogin = ?";
 $stmtSolicitante = $conexion->prepare($sqlSolicitante);
-$stmtSolicitante->bind_param("i", $codSoli);
+$stmtSolicitante->bind_param("i", $codCoordinador);
 $stmtSolicitante->execute();
 $resultSolicitante = $stmtSolicitante->get_result();
 $rowSolicitante = $resultSolicitante->fetch_assoc();
@@ -43,6 +65,10 @@ mysqli_stmt_execute($stmt);
 mysqli_stmt_bind_result($stmt, $apPaterno, $apMaterno, $nombres, $tipoDocu, $nroDocu, $codModular, $telf, $celular, $correoJP, $correoPersonal, $direccion, $anioIngreso, $anioEgreso);
 mysqli_stmt_fetch($stmt);
 mysqli_stmt_close($stmt);
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -142,11 +168,13 @@ mysqli_stmt_close($stmt);
         <p><strong>Fecha y Hora de Ingreso:</strong> <?php echo htmlspecialchars($fecHorIng); ?></p>
         <p><strong>Solicitud:</strong> <?php echo htmlspecialchars($solicito); ?></p>
         <p><strong>Estado:</strong> <?php echo ($estado == 'H') ? 'Habilitado' : 'Inhabilitado'; ?></p>
+        <?php echo htmlspecialchars($nombres . ' ' . $apPaterno . ' ' . $apMaterno); ?>
       </div>
 
       <form action="asignar_fut.php" method="post" class="input-row">
         <input type="hidden" name="nroFut" value="<?php echo $nroFut; ?>">
         <input type="hidden" name="anioFut" value="<?php echo $anioFut; ?>">
+        
 
         <div class="form-group">
           <label for="descripcion">Descripción</label>
@@ -160,7 +188,7 @@ mysqli_stmt_close($stmt);
             <?php
             if ($resultDocente->num_rows > 0) {
                 while ($rowDocente = $resultDocente->fetch_assoc()) {
-                    echo "<option value='" . htmlspecialchars($rowDocente['codLogin']) . "'>" . htmlspecialchars($rowDocente['usuLogin']) . "</option>";
+                    echo "<option value='" . htmlspecialchars($rowDocente['codLogin']) . "'>" . htmlspecialchars($rowDocente['correoJP']) . "</option>";
                 }
             } else {
                 echo "<option value='' disabled>No hay docentes disponibles</option>";
@@ -168,6 +196,11 @@ mysqli_stmt_close($stmt);
             ?>
           </select>
         </div>
+
+        <input type="number" name="Coordinador" value="<?php echo $codCoordinador; ?>">
+
+
+
 
         <div class="buttons-row">
           <button type="submit" class="btn-submit">Asignar FUT al Docente</button>

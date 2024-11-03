@@ -18,12 +18,23 @@ $apMaterno = $rowSolicitante['apMaterno'];
 $mensaje = '';
 $futEncontrados = [];
 
+// Contar FUTs asignados
+$sqlAceptados = "SELECT COUNT(*) AS totalAceptados FROM fut WHERE estado = 'A'";
+$resultAceptados = $conexion->query($sqlAceptados);
+$totalAceptados = $resultAceptados->fetch_assoc()['totalAceptados'];
+
+// Contar FUTs pendientes
+$sqlRechazados = "SELECT COUNT(*) AS totalRechazados FROM fut WHERE estado = 'D'";
+$resultRechazados = $conexion->query($sqlRechazados);
+$totalRechazados = $resultRechazados->fetch_assoc()['totalRechazados'];
+
+
 // Manejar la búsqueda de FUT
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nroFut'])) {
   $nroFutBuscado = $_POST['nroFut'];
 
   // Consultar FUT por número
-  $sqlFut = "SELECT nroFut, anioFut, fecHorIng, solicito, estado FROM fut WHERE CodDocente = ? AND nroFut = ?";
+  $sqlFut = "SELECT nroFut, anioFut, fecHorIng, solicito, estado, codCoordinador FROM fut WHERE CodDocente = ? AND nroFut = ?";
   $stmtFut = $conexion->prepare($sqlFut);
   $stmtFut->bind_param("ii", $codSoli, $nroFutBuscado);
   $stmtFut->execute();
@@ -39,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nroFut'])) {
   }
 } else {
   // Para jalar todos los datos de FUTs y mostrarlos si no hay búsqueda
-  $sqlFut = "SELECT nroFut, anioFut, fecHorIng, solicito, estado FROM fut WHERE CodDocente = ?";
+  $sqlFut = "SELECT nroFut, anioFut, fecHorIng, solicito, estado,codCoordinador FROM fut WHERE CodDocente = ?";
   $stmtFut = $conexion->prepare($sqlFut);
   $stmtFut->bind_param("i", $codSoli);
   $stmtFut->execute();
@@ -164,6 +175,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nroFut'])) {
                   }
                   ?>
                 </p>
+                <p><strong>código de coordinador:</strong> <?php echo $rowFut['codCoordinador']; ?></p>
 
                 <!-- Botón para enviar datos de este FUT -->
                 <form action="formulario_fut/formularioFUT.php" method="post">
@@ -203,13 +215,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nroFut'])) {
         <div class="analytics-container">
           <div class="total-events">
             <div class="event-number card">
-              <h2>Aprobados</h2>
-              <p>1</p>
+              <h2>Aceptados</h2>
+              <p><?php echo $totalAceptados; ?></p>
               <i class="bx bx-check-circle"></i>
             </div>
             <div class="event-number card">
-              <h2>Pendientes</h2>
-              <p>2</p>
+              <h2>Rechazados</h2>
+              <p><?php echo $totalRechazados; ?></p>
               <i class="bx bx-timer"></i>
             </div>
           </div>

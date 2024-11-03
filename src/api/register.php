@@ -47,14 +47,14 @@ if ($result->num_rows > 0) {
 $sql = "INSERT INTO login (tipoLogin, usuLogin, passLogin) VALUES (?, ?, ?)";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("sss", $role, $email, $hashed_password);
-  
+    
+if ($stmt->execute()) {
+    
     $sqlLastLogin = "SELECT codLogin FROM login ORDER BY codLogin DESC LIMIT 1";
     $resultLastLogin = $conn->query($sqlLastLogin);
     $rowLastLogin = $resultLastLogin->fetch_assoc();
     $codLogin = $rowLastLogin['codLogin'];
      $_SESSION['codLogin'] = $codLogin;
-    
-if ($stmt->execute()) {
   
     header("Location: ../../formularios/formularioSolicitante/");
 } else {

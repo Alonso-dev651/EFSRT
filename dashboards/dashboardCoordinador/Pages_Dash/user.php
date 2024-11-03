@@ -1,6 +1,7 @@
 <?php
-session_start(); // Iniciar sesión
 
+session_start(); // Iniciar sesión
+$codSoli = $_SESSION['codLogin'];
 // Verificar si existe codLogin en la sesión
 if (!isset($_SESSION['codLogin'])) {
     echo "No se encontró un código de usuario válido. Inicia sesión nuevamente.";

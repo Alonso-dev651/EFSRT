@@ -1,0 +1,31 @@
+[17-Oct-2024 15:36:23 UTC] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php:75
+Stack trace:
+#0 /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php(75): mysqli_stmt_bind_param(Object(mysqli_stmt), 'issssssssssssss...', '2024', '2024-10-17 15:3...', '1', 't1', 101, 'asd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'H', NULL, NULL, NULL, NULL)
+#1 {main}
+  thrown in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 75
+[17-Oct-2024 15:36:33 UTC] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php:75
+Stack trace:
+#0 /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php(75): mysqli_stmt_bind_param(Object(mysqli_stmt), 'issssssssssssss...', '2024', '2024-10-17 15:3...', '1', 't1', 101, 'qweew', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'H', NULL, NULL, NULL, NULL)
+#1 {main}
+  thrown in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 75
+[17-Oct-2024 15:37:24 UTC] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php:75
+Stack trace:
+#0 /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php(75): mysqli_stmt_bind_param(Object(mysqli_stmt), 'issssssssssssss...', '2024', '2024-10-17 15:3...', '1', 'we', 101, 'we', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'H', NULL, NULL, NULL, NULL)
+#1 {main}
+  thrown in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 75
+[17-Oct-2024 15:39:33 UTC] PHP Warning:  Undefined array key "codEsp" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 13
+[17-Oct-2024 15:39:33 UTC] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php:76
+Stack trace:
+#0 /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php(76): mysqli_stmt_bind_param(Object(mysqli_stmt), 'issssssssssssss...', '2024', '2024-10-17 15:3...', '1', 'asd', 101, 'asd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'H', NULL, NULL, NULL, NULL)
+#1 {main}
+  thrown in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 76
+[17-Oct-2024 15:41:43 UTC] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php:76
+Stack trace:
+#0 /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php(76): mysqli_stmt_bind_param(Object(mysqli_stmt), 'issssssssssssss...', '2024', '2024-10-17 15:4...', '1', 'asd', 101, 'asd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'H', NULL, NULL, NULL, NULL)
+#1 {main}
+  thrown in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 76
+[17-Oct-2024 15:43:12 UTC] PHP Fatal error:  Uncaught ArgumentCountError: The number of variables must match the number of parameters in the prepared statement in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php:77
+Stack trace:
+#0 /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php(77): mysqli_stmt_bind_param(Object(mysqli_stmt), 'issssssssssssss...', '2024', '2024-10-17 15:4...', '1', 'asd', 101, 'asd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'H', NULL, NULL, NULL)
+#1 {main}
+  thrown in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 77

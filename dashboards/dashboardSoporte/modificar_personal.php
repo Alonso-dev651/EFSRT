@@ -317,6 +317,7 @@ if ($result->num_rows > 0) {
                 <br><br>
 
                 <button type="submit">Modificar Personal</button>
+                <button class="cancelar" type="button" onclick="location.href='index.php'">Cancelar</button>
             </form>
             
         </div>

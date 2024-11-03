@@ -1,0 +1,2 @@
+[03-Oct-2024 17:01:02 UTC] PHP Warning:  Undefined array key "email" in /home/liveraco/proyecto.live-ra.com/EFSRT/src/api/register.php on line 16
+[03-Oct-2024 17:01:02 UTC] PHP Warning:  Undefined array key "password" in /home/liveraco/proyecto.live-ra.com/EFSRT/src/api/register.php on line 17

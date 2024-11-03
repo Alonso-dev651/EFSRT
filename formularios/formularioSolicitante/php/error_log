@@ -1,0 +1,25 @@
+[31-Oct-2024 19:24:07 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Illegal mix of collations (utf8mb4_spanish_ci,IMPLICIT) and (utf8mb4_unicode_ci,IMPLICIT) for operation '=' in /home/liveraco/proyecto.live-ra.com/EFSRT/formularios/formularioSolicitante/php/cargar_provincias.php:10
+Stack trace:
+#0 /home/liveraco/proyecto.live-ra.com/EFSRT/formularios/formularioSolicitante/php/cargar_provincias.php(10): mysqli_stmt->execute()
+#1 {main}
+  thrown in /home/liveraco/proyecto.live-ra.com/EFSRT/formularios/formularioSolicitante/php/cargar_provincias.php on line 10
+[31-Oct-2024 19:32:41 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Illegal mix of collations (utf8mb4_spanish_ci,IMPLICIT) and (utf8mb4_unicode_ci,IMPLICIT) for operation '=' in /home/liveraco/proyecto.live-ra.com/EFSRT/formularios/formularioSolicitante/php/cargar_provincias.php:10
+Stack trace:
+#0 /home/liveraco/proyecto.live-ra.com/EFSRT/formularios/formularioSolicitante/php/cargar_provincias.php(10): mysqli_stmt->execute()
+#1 {main}
+  thrown in /home/liveraco/proyecto.live-ra.com/EFSRT/formularios/formularioSolicitante/php/cargar_provincias.php on line 10
+[31-Oct-2024 19:32:45 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Illegal mix of collations (utf8mb4_spanish_ci,IMPLICIT) and (utf8mb4_unicode_ci,IMPLICIT) for operation '=' in /home/liveraco/proyecto.live-ra.com/EFSRT/formularios/formularioSolicitante/php/cargar_provincias.php:10
+Stack trace:
+#0 /home/liveraco/proyecto.live-ra.com/EFSRT/formularios/formularioSolicitante/php/cargar_provincias.php(10): mysqli_stmt->execute()
+#1 {main}
+  thrown in /home/liveraco/proyecto.live-ra.com/EFSRT/formularios/formularioSolicitante/php/cargar_provincias.php on line 10
+[31-Oct-2024 19:32:46 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Illegal mix of collations (utf8mb4_spanish_ci,IMPLICIT) and (utf8mb4_unicode_ci,IMPLICIT) for operation '=' in /home/liveraco/proyecto.live-ra.com/EFSRT/formularios/formularioSolicitante/php/cargar_provincias.php:10
+Stack trace:
+#0 /home/liveraco/proyecto.live-ra.com/EFSRT/formularios/formularioSolicitante/php/cargar_provincias.php(10): mysqli_stmt->execute()
+#1 {main}
+  thrown in /home/liveraco/proyecto.live-ra.com/EFSRT/formularios/formularioSolicitante/php/cargar_provincias.php on line 10
+[31-Oct-2024 19:33:02 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Illegal mix of collations (utf8mb4_spanish_ci,IMPLICIT) and (utf8mb4_unicode_ci,IMPLICIT) for operation '=' in /home/liveraco/proyecto.live-ra.com/EFSRT/formularios/formularioSolicitante/php/cargar_provincias.php:10
+Stack trace:
+#0 /home/liveraco/proyecto.live-ra.com/EFSRT/formularios/formularioSolicitante/php/cargar_provincias.php(10): mysqli_stmt->execute()
+#1 {main}
+  thrown in /home/liveraco/proyecto.live-ra.com/EFSRT/formularios/formularioSolicitante/php/cargar_provincias.php on line 10

@@ -5,11 +5,11 @@ $codLogin = $_SESSION['codLogin'];
 include '../src/php/db_conexion.php';
 
 // Consulta para obtener los datos del solicitante
-$query = "SELECT apPaterno, apMaterno, nombres, tipoDocu, nroDocu, codModular, telf, celular, correoJP, correoPersonal, direccion, anioIngreso, anioEgreso FROM solicitante WHERE codLogin = ?";
+$query = "SELECT apPaterno, apMaterno, nombres, tipoDocu, nroDocu, codModular, telf, celular, correoJP, correoPersonal, direccion, anioIngreso, anioEgreso, codEsp FROM solicitante WHERE codLogin = ?";
 $stmt = mysqli_prepare($conexion, $query);
 mysqli_stmt_bind_param($stmt, 'i', $codLogin);
 mysqli_stmt_execute($stmt);
-mysqli_stmt_bind_result($stmt, $apPaterno, $apMaterno, $nombres, $tipoDocu, $nroDocu, $codModular, $telf, $celular, $correoJP, $correoPersonal, $direccion, $anioIngreso, $anioEgreso);
+mysqli_stmt_bind_result($stmt, $apPaterno, $apMaterno, $nombres, $tipoDocu, $nroDocu, $codModular, $telf, $celular, $correoJP, $correoPersonal, $direccion, $anioIngreso, $anioEgreso, $codEsp);
 mysqli_stmt_fetch($stmt);
 mysqli_stmt_close($stmt);
 ?>
@@ -165,9 +165,17 @@ mysqli_stmt_close($stmt);
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="input-row">
+
+                    <div class="form-group">
                     <label for="direccion">Dirección:</label>
                     <input class="input_form" type="text" id="direccion" name="direccion" value="<?php echo $direccion; ?>">
+                </div>
+
+                    <div class="form-group">
+                    <label for="direccion">Código de Especialidad:</label>
+                    <input class="input_form" type="text" id="codEsp" name="codEsp" value="<?php echo $codEsp; ?>">
+                </div>
                 </div>
 
                 <div class="input-row">

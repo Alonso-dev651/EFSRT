@@ -9,7 +9,9 @@ try {
     $codTT = $_POST['tipoTramite'];
     $solicito = $_POST['solicitud']; // Descripción de la solicitud
     $descripcion = $_POST['descripcion'];
-    $codSoli = $_SESSION['codLogin']; // Código momentáneo para probar envíos
+    $codEsp = $_POST['codEsp'];
+    $codSoli = $_SESSION['codLogin']; 
+    // Código momentáneo para probar envíos
 
     // Fecha y hora actuales
     $fechaHoraActual = date('Y-m-d H:i:s');
@@ -31,8 +33,8 @@ try {
     }
     $stmtSolicitante->close();
 
-    $query = "INSERT INTO fut (anioFut, fecHorIng, codTT, solicito, codSoli, descripcion, fecHoraAsignaDocente, fecHoraNotificaSolicitante, fecHoraSubePrimerFormato, fecHoraSubeUltimoFormato, fecHoraDocenteCierraFut, descDocenteCierraFut, fecHoraCoordCierraFut, descCoorCierraFut, estado, CodDocente, comentario, archivo_pdf) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $query = "INSERT INTO fut (anioFut, fecHorIng, codTT, solicito, codSoli, descripcion, fecHoraAsignaDocente, fecHoraNotificaSolicitante, fecHoraSubePrimerFormato, fecHoraSubeUltimoFormato, fecHoraDocenteCierraFut, descDocenteCierraFut, fecHoraCoordCierraFut, descCoorCierraFut, estado, CodDocente, codEsp, comentario, archivo_pdf) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = mysqli_prepare($conexion, $query);
 
@@ -47,12 +49,13 @@ try {
         $fecHoraCoordCierraFut = null;
         $descCoorCierraFut = null;
         $CodDocente = null;
+       
         $comentario = null;
         $archivo_pdf = null;
 
         // Asignar los valores a la consulta
         $estado = 'H'; // Valor por defecto para estado
-        mysqli_stmt_bind_param($stmt, 'isssssssssssssssss', 
+        mysqli_stmt_bind_param($stmt, 'issssssssssssssssss', 
             $anioFut, 
             $fechaHoraActual, 
             $codTT, 
@@ -69,6 +72,7 @@ try {
             $descCoorCierraFut, 
             $estado,
             $CodDocente,
+            $codEsp,    
             $comentario,
             $archivo_pdf
         );
@@ -86,6 +90,7 @@ try {
                 <input type="hidden" name="nombres" value="' . htmlspecialchars($nombres) . '">
                 <input type="hidden" name="aniofut" value="' . htmlspecialchars($anioFut) . '">
                 <input type="hidden" name="codtt" value="' . htmlspecialchars($codTT) . '">
+                <input type="hidden" name="codEsp" value="' . htmlspecialchars($codEsp) . '">
                 <input type="hidden" name="solicito" value="' . htmlspecialchars($solicito) . '">
                 <input type="hidden" name="descripcion" value="' . htmlspecialchars($descripcion) . '">
                 <button type="submit">Generar Reporte PDF</button>
