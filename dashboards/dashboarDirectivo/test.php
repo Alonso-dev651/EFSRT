@@ -286,8 +286,31 @@ $resultFut = $stmtFut->get_result();
             <?php
             $etiquetas = $datosGraficos['etiquetas'];
             $valores = $datosGraficos['valores'];
+
+            $meses = [
+                1 => "enero",
+                2 => "febrero",
+                3 => "marzo",
+                4 => "abril",
+                5 => "mayo",
+                6 => "junio",
+                7 => "julio",
+                8 => "agosto",
+                9 => "septiembre",
+                10 => "octubre",
+                11 => "noviembre",
+                12 => "diciembre"
+
+            ];
+
+            if (isset($meses[$etiquetas])) {
+                $mes = $meses[$etiquetas];
+            } else {
+                $mes = "Mes inválido"; // Manejo de errores en caso de un número inválido
+            }
+
             ?>
-            labels: <?php echo json_encode($etiquetas); ?>,
+            labels: <?php echo json_encode($mes); ?>,
             data: <?php echo json_encode($valores); ?>,
         };
 
@@ -297,7 +320,7 @@ $resultFut = $stmtFut->get_result();
         var doughnut = new Chart(chart, {
             type: "doughnut",
             data: {
-                labels: <?php echo json_encode($etiquetas); ?>, // Eliminar los corchetes
+                labels: <?php echo json_encode($mes); ?>, // Eliminar los corchetes
                 datasets: [{
                     label: "Cantidad de FUTs",
                     data: <?php echo json_encode($valores); ?>, // Eliminar los corchetes
