@@ -279,7 +279,7 @@ $resultFut = $stmtFut->get_result();
             </div>
         </div>
     </section>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const chartData = {
@@ -297,10 +297,10 @@ $resultFut = $stmtFut->get_result();
         var doughnut = new Chart(chart, {
             type: "doughnut",
             data: {
-                labels: [<?php echo json_encode($etiquetas); ?>],
+                labels: <?php echo json_encode($etiquetas); ?>, // Eliminar los corchetes
                 datasets: [{
                     label: "# of Events",
-                    data: [<?php echo json_encode($valores); ?>],
+                    data: <?php echo json_encode($valores); ?>, // Eliminar los corchetes
                     backgroundColor: ["#582bac", "#b31a4d", "#e48e2c", "#4a920f"],
                     offset: 10,
                     hoverOffset: 8,
@@ -333,7 +333,9 @@ $resultFut = $stmtFut->get_result();
         function population() {
             chartData.labels.forEach((label, i) => {
                 let eachEvent = document.createElement("li");
-                eachEvent.innerHTML = `${label}: <span class="percentage">${chartData.data[i]}%</span> `;
+                // Convertir el valor a número antes de calcular el porcentaje
+                let porcentaje = (Number(chartData.data[i]) * 100).toFixed(2);
+                eachEvent.innerHTML = `${label}: <span class="percentage">${porcentaje}%</span> `;
                 eventList.appendChild(eachEvent);
             });
         }
