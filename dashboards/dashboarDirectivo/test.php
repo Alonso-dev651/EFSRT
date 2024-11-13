@@ -257,21 +257,8 @@ $resultFut = $stmtFut->get_result();
             <div class="analytics">
                 <h1>Analisis</h1>
                 <div class="analytics-container">
-                    <div class="total-events">
-                        <div class="event-number card">
-                            <h2>Aprobados</h2>
-                            <p>1</p>
-                            <i class="bx bx-check-circle"></i>
-                        </div>
-                        <div class="event-number card">
-                            <h2>Pendientes</h2>
-                            <p>2</p>
-                            <i class="bx bx-timer"></i>
-                        </div>
-                    </div>
-
                     <div class="chart" id="doughnut-chart">
-                        <h2>Porcentaje del Tramite</h2>
+                        <h2>Cantidad de Futs por Mes</h2>
                         <canvas id="doughnut"></canvas>
                         <ul></ul>
                     </div>
