@@ -279,7 +279,8 @@ $resultFut = $stmtFut->get_result();
             </div>
         </div>
     </section>
-
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const chartData = {
             <?php
