@@ -287,38 +287,27 @@ $resultFut = $stmtFut->get_result();
             $etiquetas = $datosGraficos['etiquetas'];
             $valores = $datosGraficos['valores'];
 
-            $mesNumero = $etiquetas;
+            $mes = array(
+                "1" => "Enero",
+                "2" => "Febrero",
+                "3" => "Marzo",
+                "4" => "Abril",
+                "5" => "Mayo",
+                "6" => "Junio",
+                "7" => "Julio",
+                "8" => "Agosto",
+                "9" => "Septiembre",
+                "10" => "Octubre",
+                "11" => "Noviembre",
+                "12" => "Diciembre"
+            );
 
-            if (is_numeric($mesNumero)) {
-                $mesNumero = intval($mesNumero); // Convertir a entero si es necesario
-
-                $meses = [
-                    1 => "enero",
-                    2 => "febrero",
-                    3 => "marzo",
-                    4 => "abril",
-                    5 => "mayo",
-                    6 => "junio",
-                    7 => "julio",
-                    8 => "agosto",
-                    9 => "septiembre",
-                    10 => "octubre",
-                    11 => "noviembre",
-                    12 => "diciembre"
-                ];
-
-                if (isset($meses[$mesNumero])) {
-                    $mes = $meses[$mesNumero];
-                } else {
-                    $mes = "Mes inválido";
-                }
-
-            } else {
-                echo "Error: El valor de \$etiquetas no es un número válido.";
-            }
+            $meses = array_map(function($pos) use ($mes) {
+                return $mes[$pos];
+            }, $etiquetas);
 
             ?>
-            labels: <?php echo json_encode($mes); ?>,
+            labels: <?php echo json_encode($meses); ?>,
             data: <?php echo json_encode($valores); ?>,
         };
 
@@ -328,7 +317,7 @@ $resultFut = $stmtFut->get_result();
         var doughnut = new Chart(chart, {
             type: "doughnut",
             data: {
-                labels: <?php echo json_encode($mes); ?>,
+                labels: <?php echo json_encode($meses); ?>,
                 datasets: [{
                     label: "Cantidad de FUTs",
                     data: <?php echo json_encode($valores); ?>,
