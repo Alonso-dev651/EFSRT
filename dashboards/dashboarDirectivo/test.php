@@ -43,7 +43,7 @@ $resultFut = $stmtFut->get_result();
     <script defer src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
-    <script defer src="main.js"></script>
+    <script defer src="test.js"></script>
     <title>EFSRT Dashboard</title>
 </head>
 
