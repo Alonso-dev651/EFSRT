@@ -7,6 +7,6 @@ $db = 'liveraco_efsrtBD';
 $conexion = new mysqli($host, $user, $pass, $db);
 
 if ($conexion->connect_error) {
-    die("Conexi¨®n fallida: " . $conexion->connect_error);
+    die("Conexiï¿½ï¿½n fallida: " . $conexion->connect_error);
 }
 ?>

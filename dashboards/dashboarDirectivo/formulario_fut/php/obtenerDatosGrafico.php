@@ -2,9 +2,9 @@
 function obtenerDatosGrafico() {
     // Configuración de la base de datos
     $host = "localhost";
-    $dbname = "liveraco_efsrtbd";
-    $username = "root";
-    $password = "";
+    $dbname = "liveraco_pruebabd";
+    $username = "JosePardo*2411";
+    $password = "liveraco_efsrtBD";
 
     try {
         // Conexión a la base de datos
