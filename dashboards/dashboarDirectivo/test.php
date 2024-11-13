@@ -299,7 +299,7 @@ $resultFut = $stmtFut->get_result();
             data: {
                 labels: <?php echo json_encode($etiquetas); ?>, // Eliminar los corchetes
                 datasets: [{
-                    label: "# of Events",
+                    label: "Cantidad de FUTs",
                     data: <?php echo json_encode($valores); ?>, // Eliminar los corchetes
                     backgroundColor: ["#582bac", "#b31a4d", "#e48e2c", "#4a920f"],
                     offset: 10,
