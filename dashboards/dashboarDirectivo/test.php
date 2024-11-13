@@ -293,7 +293,7 @@ $resultFut = $stmtFut->get_result();
         const chart = document.getElementById("doughnut");
         const eventList = document.querySelector(".chart ul");
 
-        new Chart(chart, {
+        var doughnut = new Chart(chart, {
             type: "doughnut",
             data: {
                 labels: [<?php echo json_encode($etiquetas); ?>],
