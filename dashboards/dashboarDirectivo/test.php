@@ -287,26 +287,34 @@ $resultFut = $stmtFut->get_result();
             $etiquetas = $datosGraficos['etiquetas'];
             $valores = $datosGraficos['valores'];
 
-            $meses = [
-                1 => "enero",
-                2 => "febrero",
-                3 => "marzo",
-                4 => "abril",
-                5 => "mayo",
-                6 => "junio",
-                7 => "julio",
-                8 => "agosto",
-                9 => "septiembre",
-                10 => "octubre",
-                11 => "noviembre",
-                12 => "diciembre"
+            $mesNumero = $etiquetas;
 
-            ];
+            if (is_numeric($mesNumero)) {
+                $mesNumero = intval($mesNumero); // Convertir a entero si es necesario
 
-            if (isset($meses[$etiquetas])) {
-                $mes = $meses[$etiquetas];
+                $meses = [
+                    1 => "enero",
+                    2 => "febrero",
+                    3 => "marzo",
+                    4 => "abril",
+                    5 => "mayo",
+                    6 => "junio",
+                    7 => "julio",
+                    8 => "agosto",
+                    9 => "septiembre",
+                    10 => "octubre",
+                    11 => "noviembre",
+                    12 => "diciembre"
+                ];
+
+                if (isset($meses[$mesNumero])) {
+                    $mes = $meses[$mesNumero];
+                } else {
+                    $mes = "Mes inválido";
+                }
+
             } else {
-                $mes = "Mes inválido"; // Manejo de errores en caso de un número inválido
+                echo "Error: El valor de \$etiquetas no es un número válido.";
             }
 
             ?>
