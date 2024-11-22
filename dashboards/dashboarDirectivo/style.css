@@ -251,8 +251,8 @@ body {
 
 .title_content{
   display: flex;
-  justify-content: flex-start;
-  padding: 10px;
+  justify-content: center;
+  padding-top: 10px;
 }
 
 .upcoming-events h1 {
