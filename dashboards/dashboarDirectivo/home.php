@@ -238,7 +238,6 @@ $resultFut = $stmtFut->get_result();
           function toggleDetalles(button) {
             // Encuentra el div de detalles (está en el mismo nivel que el botón)
             var detallesDiv = button.closest('.fut-card').querySelector('.detalles');
-
             // Si los detalles están ocultos, los mostramos
             if (detallesDiv.style.display === "none") {
               detallesDiv.style.display = "block";
@@ -250,107 +249,9 @@ $resultFut = $stmtFut->get_result();
             }
           }
         </script>
-
-
-      </div>
-    </div>
-
-    <div class="right-content">
-      <div class="analytics">
-        <h1>Analisis</h1>
-        <div class="analytics-container">
-          <div class="chart" id="doughnut-chart">
-            <h2>Cantidad de Futs por Mes</h2>
-            <canvas id="doughnut"></canvas>
-            <ul></ul>
-          </div>
-        </div>
       </div>
     </div>
   </section>
-
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
-    const chartData = {
-      <?php
-      $etiquetas = $datosGraficos['etiquetas'];
-      $valores = $datosGraficos['valores'];
-
-      $mes = array(
-        "1" => "Enero",
-        "2" => "Febrero",
-        "3" => "Marzo",
-        "4" => "Abril",
-        "5" => "Mayo",
-        "6" => "Junio",
-        "7" => "Julio",
-        "8" => "Agosto",
-        "9" => "Septiembre",
-        "10" => "Octubre",
-        "11" => "Noviembre",
-        "12" => "Diciembre"
-      );
-
-      $meses = array_map(function ($pos) use ($mes) {
-        return $mes[$pos];
-      }, $etiquetas);
-
-      ?>
-      labels: <?php echo json_encode($meses); ?>,
-      data: <?php echo json_encode($valores); ?>,
-    };
-
-    const chart = document.getElementById("doughnut");
-    const eventList = document.querySelector(".chart ul");
-
-    var doughnut = new Chart(chart, {
-      type: "doughnut",
-      data: {
-        labels: <?php echo json_encode($meses); ?>,
-        datasets: [{
-          label: "Cantidad de FUTs",
-          data: <?php echo json_encode($valores); ?>,
-          backgroundColor: ["#582bac", "#b31a4d", "#e48e2c", "#4a920f"],
-          offset: 10,
-          hoverOffset: 8,
-          hoverBorderColor: "#9a999b",
-          borderWidth: 1,
-        }, ],
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            display: true,
-            labels: {
-              color: "#8b8a96",
-              font: {
-                size: 12,
-                weight: 600,
-              },
-            },
-          },
-        },
-        layout: {
-          padding: {
-            bottom: 10,
-          },
-        },
-      },
-    });
-
-    function population() {
-      chartData.labels.forEach((label, i) => {
-        let eachEvent = document.createElement("li");
-        // Convertir el valor a número antes de calcular el porcentaje
-        let porcentaje = (Number(chartData.data[i]) * 100).toFixed(2);
-        eachEvent.innerHTML = `${label}: <span class="percentage">${porcentaje}%</span> `;
-        eventList.appendChild(eachEvent);
-      });
-    }
-
-    population();
-  </script>
 </body>
 
 </html>
