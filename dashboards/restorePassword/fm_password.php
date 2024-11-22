@@ -17,7 +17,6 @@
       min-height: 100vh;
       padding: 10px;
     }
-
     .container {
       background-color: #ffffff;
       padding: 40px;
