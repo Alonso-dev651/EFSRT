@@ -33,6 +33,34 @@ try {
     }
     $stmtSolicitante->close();
 
+   // Manejo de archivo PDF
+    $archivo_pdf = null;
+    if (isset($_FILES['archivo']) && $_FILES['archivo']['error'] == 0) {
+        $nombreArchivo = $_FILES['archivo']['name'];
+        $rutaTemporal = $_FILES['archivo']['tmp_name'];
+        $rutaDestino = 'uploads/' . $nombreArchivo;
+    
+        // Mueve el archivo a la carpeta 'uploads'
+        if (move_uploaded_file($rutaTemporal, $rutaDestino)) {
+            $archivo_pdf = $rutaDestino;
+    
+            // Inserta la información del archivo en la tabla 'archivos'
+            $queryArchivo = "INSERT INTO archivos (codLogin, nombre_archivo, ruta_archivo) VALUES (?, ?, ?)";
+            $stmtArchivo = $conexion->prepare($queryArchivo);
+            $stmtArchivo->bind_param("iss", $codSoli, $nombreArchivo, $rutaDestino);
+    
+            if (!$stmtArchivo->execute()) {
+                throw new Exception("Error al registrar el archivo en la base de datos: " . $stmtArchivo->error);
+            }
+    
+            $stmtArchivo->close();
+        } else {
+            throw new Exception("Error al subir el archivo.");
+        }
+    }
+
+
+    // Inserción en la base de datos
     $query = "INSERT INTO fut (anioFut, fecHorIng, codTT, solicito, codSoli, descripcion, fecHoraAsignaDocente, fecHoraNotificaSolicitante, fecHoraSubePrimerFormato, fecHoraSubeUltimoFormato, fecHoraDocenteCierraFut, descDocenteCierraFut, fecHoraCoordCierraFut, descCoorCierraFut, estado, CodDocente, codEsp, comentario, archivo_pdf) 
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -49,9 +77,7 @@ try {
         $fecHoraCoordCierraFut = null;
         $descCoorCierraFut = null;
         $CodDocente = null;
-       
         $comentario = null;
-        $archivo_pdf = null;
 
         // Asignar los valores a la consulta
         $estado = 'H'; // Valor por defecto para estado

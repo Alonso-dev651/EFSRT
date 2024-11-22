@@ -16,46 +16,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fecHorIng = $_POST['fecHorIng'];
     $solicito = $_POST['solicito'];
     $estado = $_POST['estado'];
+    $codCoordinador = $_POST['codCoordinador'];
 }
 
-// Obtener datos de aea
-$sqlCodSoli= "SELECT codSoli FROM fut WHERE nroFut = ?";
-$stmtCodSoli = $conexion->prepare($sqlCodSoli);
-$stmtCodSoli->bind_param("i", $nroFut);
-$stmtCodSoli->execute();
-$resultCodSoli = $stmtCodSoli->get_result();
-$rowCodSoli = $resultCodSoli->fetch_assoc();
+// Obtener el comentario del fut.
+$sqlfut = "SELECT comentario FROM fut WHERE nroFut = ?";
+$stmtfut = $conexion->prepare($sqlfut);
+$stmtfut->bind_param("i", $nroFut);
+$stmtfut->execute();
+$resultfut = $stmtfut->get_result();
+$rowfut = $resultfut->fetch_assoc();
 
-$codSoli = $rowCodSoli['codSoli'];
+// Verifica si el comentario es NULL
+$comentario = !empty($rowfut['comentario']) ? $rowfut['comentario'] : 'No hay comentario disponible';
 
-
-// Obtener datos de especialidad
-$sqlEspecialidad= "SELECT codEsp FROM solicitante WHERE codLogin = ?";
-$stmtEspecialidad = $conexion->prepare($sqlEspecialidad);
-$stmtEspecialidad->bind_param("i", $codSoli);
-$stmtEspecialidad->execute();
-$resultEspecialidad = $stmtEspecialidad->get_result();
-$rowEspecialidad = $resultEspecialidad->fetch_assoc();
-
-$codEspecialidad = $rowEspecialidad['codEsp'];
-
-
-
-$sqlNEspecialidad= "SELECT codEsp, nomEsp FROM especialidad WHERE codEsp = ?";
-$stmtNEspecialidad = $conexion->prepare($sqlNEspecialidad);
-$stmtNEspecialidad->bind_param("i", $codEspecialidad);
-$stmtNEspecialidad->execute();
-$resultNEspecialidad = $stmtNEspecialidad->get_result();
-$rowNEspecialidad = $resultNEspecialidad->fetch_assoc();
-
-$nomEspecialidad = $rowNEspecialidad['nomEsp'];
-
-$sqlDocente = "SELECT codLogin, correoJP FROM personal WHERE tipoPer = 'DOCENTE' and codEsp = '$codEspecialidad'";
-$resultDocente = $conexion->query($sqlDocente);
-
-if (!$resultDocente) {
-    die("Error en la consulta de docentes: " . $conexion->error);
-}
 
 // Obtener datos del solicitante
 $sqlSolicitante = "SELECT nombres, apPaterno, apMaterno FROM personal WHERE codLogin = ?";
@@ -77,9 +51,6 @@ mysqli_stmt_bind_result($stmt, $apPaterno, $apMaterno, $nombres, $tipoDocu, $nro
 mysqli_stmt_fetch($stmt);
 mysqli_stmt_close($stmt);
 
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -100,8 +71,9 @@ mysqli_stmt_close($stmt);
   <script defer src="../main.js"></script>
   <title>EFSRT Dashboard</title>
 </head>
+
 <body>
-  <nav class="main-menu">
+    <nav class="main-menu">
     <div>
       <div class="logo">
         <img src="../Pages_Dash/Logo.ico" alt="logoPardo" />
@@ -159,27 +131,18 @@ mysqli_stmt_close($stmt);
       </li>
     </ul>
   </nav>
-
+    
   <section class="content">
     <div class="left-content">
-      <div class="search-and-check">
-        <form class="search-box">
-          <input type="text" placeholder="Buscar..." />
-          <i class="bx bx-search"></i>
-        </form>
-      </div>
-
-      <div class="upcoming-events">
       <div class="form-solicitud">
-      <h1>Asignar Docente al FUT</h1>
+        <h1>Detalles del FUT</h1>
 
-      <div class="fut-info">
-        <p><strong>Número FUT:</strong> <?php echo htmlspecialchars($nroFut); ?></p>
-        <p><strong>Año FUT:</strong> <?php echo htmlspecialchars($anioFut); ?></p>
-        <p><strong>Especialidad:</strong> <?php echo htmlspecialchars($nomEspecialidad); ?></p>
-        <p><strong>Fecha y Hora de Ingreso:</strong> <?php echo htmlspecialchars($fecHorIng); ?></p>
-        <p><strong>Solicitud:</strong> <?php echo htmlspecialchars($solicito); ?></p>
-        <p><strong>Estado:</strong>
+        <div class="fut-info">
+          <p><strong>Número FUT:</strong> <?php echo htmlspecialchars($_POST['nroFut']); ?></p>
+          <p><strong>Año FUT:</strong> <?php echo htmlspecialchars($_POST['anioFut']); ?></p>
+          <p><strong>Fecha y Hora de Ingreso:</strong> <?php echo htmlspecialchars($_POST['fecHorIng']); ?></p>
+          <p><strong>Solicitud:</strong> <?php echo htmlspecialchars($_POST['solicito']); ?></p>
+          <p><strong>Estado:</strong>
                   <?php
                     switch ($estado) {
                       case 'H':
@@ -202,49 +165,36 @@ mysqli_stmt_close($stmt);
                     }
                   ?>
                 </p>
-        <?php echo htmlspecialchars($nombres . ' ' . $apPaterno . ' ' . $apMaterno); ?>
-      </div>
+          <p><strong>Coordinador:</strong> <?php echo $nombres . ' ' . $apPaterno; ?></p>
+          <p><strong>Comentario:</strong> <?php echo htmlspecialchars($comentario); ?></p>
+        </div>
 
-      <form action="asignar_fut.php" method="post" class="input-row">
-        <input type="hidden" name="nroFut" value="<?php echo $nroFut; ?>">
-        <input type="hidden" name="anioFut" value="<?php echo $anioFut; ?>">
-        
-
+        <form action="procesar_gestion.php" method="post">
+          <input type="hidden" name="nroFut" value="<?php echo htmlspecialchars($_POST['nroFut']); ?>">
+          <input type="hidden" name="anioFut" value="<?php echo htmlspecialchars($_POST['anioFut']); ?>">
+          <input type="hidden" name="fecHorIng" value="<?php echo htmlspecialchars($_POST['fecHorIng']); ?>">
+          <input type="hidden" name="solicito" value="<?php echo htmlspecialchars($_POST['solicito']); ?>">
+          <input type="hidden" name="estado" value="<?php echo htmlspecialchars($_POST['estado']); ?>">
+          <input type="hidden" name="codCoordinador" value="<?php echo htmlspecialchars($_POST['codCoordinador']); ?>">
+          <input type="hidden" name="comentario" value="<?php echo htmlspecialchars($comentario); ?>">
+          
+          <br>
         <div class="form-group">
-          <label for="descripcion">Descripción</label>
-          <textarea name="descripcion" id="descripcion" rows="3" required></textarea>
+            <label for="Coordescripcion"><strong>Descripcion</strong></label>
+            <textarea id="Coordescripcion" name="Coordescripcion" rows="4" cols="50" placeholder="Ingrese una descripcion"></textarea>
         </div>
-
-        <div class="form-group">
-          <label for="docente">Seleccionar Docente</label>
-          <select name="docente" id="docente" required>
-            <option value="" disabled selected>Seleccione un docente</option>
-            <?php
-            if ($resultDocente->num_rows > 0) {
-                while ($rowDocente = $resultDocente->fetch_assoc()) {
-                    echo "<option value='" . htmlspecialchars($rowDocente['codLogin']) . "'>" . htmlspecialchars($rowDocente['correoJP']) . "</option>";
-                }
-            } else {
-                echo "<option value='' disabled>No hay docentes disponibles</option>";
-            }
-            ?>
-          </select>
-        </div>
-
-        <input type="number" name="coordinador" value="<?php echo $codCoordinador; ?>">
-
-
-
-
-        <div class="buttons-row">
-          <button type="submit" class="btn-submit">Asignar FUT al Docente</button>
-          <button type="button" class="btn-cancel" onclick="window.location.href='../../dashboardCoordinador/home.php';">Cancelar</button>
-        </div>
-      </form>
-    </div>
-
+          
+          <div class="button-row">
+            <div class="form-group">
+                <button type="submit" class="fut-button" name="accion" value="cerrar">Cerrar FUT</button>
+                <button type="submit" class="fut-button" name="accion" value="rechazar">Rechazar FUT</button>
+                <button type="button" class="btn-cancel" onclick="window.location.href='../../dashboardCoordinador/home.php';">Cancelar</button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
+    
     <div class="right-content">
       <div class="interaction-control interactions">
         <i class="fa-regular fa-envelope notified"></i>
@@ -301,9 +251,5 @@ mysqli_stmt_close($stmt);
     </div>
   </section>
 </body>
+
 </html>
-
-
-<?php
-$conexion->close();
-?>

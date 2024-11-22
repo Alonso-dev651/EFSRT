@@ -273,6 +273,7 @@ if ($result->num_rows > 0) {
                 <br><br>
 
                 <button type="submit">Agregar</button>
+                <button class="cancelar" type="button" onclick="location.href='index.php'">Cancelar</button>
             </form>
 
 

@@ -1,14 +1,29 @@
 <?php
 session_start();
+$codSoli = $_SESSION['codLogin'];
+
 include '../src/php/nuevoFut.php';
 $nroFut = $_POST['nroFut']; // Obtener nroFut del formulario anterior
 include '../src/php/db_conexion.php';
 
+// Para jalar los datos e imprimirse
+$sqlSolicitante = "SELECT nombres, apPaterno, apMaterno FROM personal WHERE codLogin = ?";
+$stmtSolicitante = $conexion->prepare($sqlSolicitante);
+$stmtSolicitante->bind_param("i", $codSoli);
+$stmtSolicitante->execute();
+$resultSolicitante = $stmtSolicitante->get_result();
+$rowSolicitante = $resultSolicitante->fetch_assoc();
+$nombresDocente = $rowSolicitante['nombres'];
+$apPaternoDocente = $rowSolicitante['apPaterno'];
+$apMaternoDocente = $rowSolicitante['apMaterno'];
+          
 // Consulta para obtener los datos del solicitante y el tipo de trámite basado en nroFut
-$query = "SELECT s.apPaterno, s.apMaterno, s.nombres, s.tipoDocu, s.nroDocu, s.codModular, s.telf, s.celular, s.correoJP, s.correoPersonal, s.direccion, s.anioIngreso, s.anioEgreso, f.codTT, f.solicito, f.descripcion, f.comentario, f.estado, f.archivo_pdf
-          FROM solicitante s
-          INNER JOIN fut f ON s.codLogin = f.codSoli
-          WHERE f.nroFut = ?";
+$query = "SELECT s.apPaterno, s.apMaterno, s.nombres, s.tipoDocu, s.nroDocu, s.codModular, s.telf, s.celular, s.correoJP, s.correoPersonal, s.direccion, s.anioIngreso, s.anioEgreso, f.codTT, f.solicito, f.descripcion, f.comentario, f.estado, a.nombre_archivo 
+          FROM solicitante s 
+          INNER JOIN fut f ON s.codLogin = f.codSoli 
+          INNER JOIN archivos a ON s.codLogin = a.codLogin 
+          WHERE f.nroFut = ?;";
+
 $stmt = mysqli_prepare($conexion, $query);
 mysqli_stmt_bind_param($stmt, 'i', $nroFut);
 mysqli_stmt_execute($stmt);
@@ -46,7 +61,7 @@ mysqli_stmt_close($stmt);
 
             <div class="user-info">
                 <img src="https://cdn-icons-png.flaticon.com/512/7816/7816916.png" alt="user" />
-                <p><?php echo $nombres . ' ' . $apPaterno . ' ' . $apMaterno; ?></p>
+                <p><?php echo $nombresDocente . ' ' . $apPaternoDocente . ' ' . $apMaternoDocente; ?></p>
             </div>
             <ul>
                 <li class="nav-item">
@@ -98,12 +113,6 @@ mysqli_stmt_close($stmt);
     </nav>
     <section class="content">
         <div class="left-content">
-            <div class="search-and-check">
-                <form class="search-box">
-                    <input type="text" placeholder="Buscar..." />
-                    <i class="bx bx-search"></i>
-                </form>
-            </div>
             <h1>FORMULARIO FUT</h1>
             <div class="form-container"> <!-- Contenedor para ambos formularios -->
                 <div class="form-solicitud">
@@ -238,7 +247,7 @@ mysqli_stmt_close($stmt);
 
                         <?php if (!empty($archivo_pdf)): ?>
                             <p>
-                                <a href="uploads/<?php echo $archivo_pdf; ?>" target="_blank">Abrir archivo existente</a>
+                                <a href="../../dashboardSolicitante/src/uploads/<?php echo $archivo_pdf; ?>" target="_blank">Abrir archivo existente</a>
                             </p>
                             <p>
                                 <label for="nuevoDocumento">Subir nuevo documento (opcional)</label>
@@ -256,61 +265,6 @@ mysqli_stmt_close($stmt);
                 </form>
             </div>
 
-        </div>
-
-        <div class="right-content">
-            <div class="interaction-control interactions">
-                <i class="fa-regular fa-envelope notified"></i>
-                <i class="fa-regular fa-bell notified"></i>
-                <div class="toggle" onclick="switchTheme()">
-                    <div class="mode-icon moon">
-                        <i class="bx bxs-moon"></i>
-                    </div>
-                    <div class="mode-icon sun hidden">
-                        <i class="bx bxs-sun"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="analytics">
-                <h1>Analisis</h1>
-                <div class="analytics-container">
-                    <div class="total-events">
-                        <div class="event-number card">
-                            <h2>Aprobados</h2>
-                            <p>1</p>
-                            <i class="bx bx-check-circle"></i>
-                        </div>
-                        <div class="event-number card">
-                            <h2>Pendientes</h2>
-                            <p>2</p>
-                            <i class="bx bx-timer"></i>
-                        </div>
-                    </div>
-
-                    <div class="chart" id="doughnut-chart">
-                        <h2>Porcentaje del Tramite</h2>
-                        <canvas id="doughnut"></canvas>
-                        <ul></ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="contacts">
-                <h1>Contactos</h1>
-                <div class="contacts-container">
-                    <div class="contact-status">
-                        <div class="contact-activity">
-                            <img
-                                src="https://cdn-icons-png.flaticon.com/512/7816/7816916.png"
-                                alt="User Icon" />
-                            <p>Usuario <span><a target="_blank"
-                                        href="https://github.com/Alonso-dev651">Developer</a></span></p>
-                        </div>
-                        <small>1 hour ago</small>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 

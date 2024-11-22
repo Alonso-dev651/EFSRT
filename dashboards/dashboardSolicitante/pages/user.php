@@ -77,7 +77,7 @@ $apMaterno = $rowSolicitante['apMaterno'];
 
       <div class="user-info">
         <img src="https://cdn-icons-png.flaticon.com/512/7816/7816916.png" alt="user" />
-        <p><?php echo $nombres . ' ' . $apPaterno . ' ' . $apMaterno; ?></p>
+        <p><?php echo $apPaterno . ' ' . $apMaterno . ' ' . $nombres; ?></p>
       </div>
       <ul>
         <li class="nav-item active">

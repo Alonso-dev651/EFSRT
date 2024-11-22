@@ -4,7 +4,7 @@ $codSoli = $_SESSION['codLogin'];
 include 'src/php/db_conexion.php';
 
 // Para jalar los datos e imprimirse
-$sqlSolicitante = "SELECT nombres, apPaterno, apMaterno FROM solicitante WHERE codLogin = ?";
+$sqlSolicitante = "SELECT nombres, apPaterno, apMaterno FROM personal WHERE codLogin = ?";
 $stmtSolicitante = $conexion->prepare($sqlSolicitante);
 $stmtSolicitante->bind_param("i", $codSoli);
 $stmtSolicitante->execute();
@@ -118,9 +118,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nroFut'])) {
         <li class="nav-item">
           <a href="pages/estado.php">
             <i class="fa-solid fa-chart-simple nav-icon"></i>
-            <span class="nav-text">Estado deFUTS</span>
+            <span class="nav-text">Estado de FUTs</span>
           </a>
         </li>
+        <br>
 
         <li class="nav-item">
           <a href="#">
@@ -178,7 +179,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nroFut'])) {
                 <p><strong>código de coordinador:</strong> <?php echo $rowFut['codCoordinador']; ?></p>
 
                 <!-- Botón para enviar datos de este FUT -->
-                <form action="formulario_fut/formularioFUT.php" method="post">
+                <form action="pages/formularioFUT.php" method="post">
                   <input type="hidden" name="nroFut" value="<?php echo $rowFut['nroFut']; ?>">
                   <input type="hidden" name="anioFut" value="<?php echo $rowFut['anioFut']; ?>">
                   <input type="hidden" name="fecHorIng" value="<?php echo $rowFut['fecHorIng']; ?>">
@@ -192,61 +193,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nroFut'])) {
             <p>No hay FUTs asignados.</p>
           <?php endif; ?>
           <br>
-        </div>
-      </div>
-    </div>
-
-    <div class="right-content">
-      <div class="interaction-control interactions">
-        <i class="fa-regular fa-envelope notified"></i>
-        <i class="fa-regular fa-bell notified"></i>
-        <div class="toggle" onclick="switchTheme()">
-          <div class="mode-icon moon">
-            <i class="bx bxs-moon"></i>
-          </div>
-          <div class="mode-icon sun hidden">
-            <i class="bx bxs-sun"></i>
-          </div>
-        </div>
-      </div>
-
-      <div class="analytics">
-        <h1>Analisis</h1>
-        <div class="analytics-container">
-          <div class="total-events">
-            <div class="event-number card">
-              <h2>Aceptados</h2>
-              <p><?php echo $totalAceptados; ?></p>
-              <i class="bx bx-check-circle"></i>
-            </div>
-            <div class="event-number card">
-              <h2>Rechazados</h2>
-              <p><?php echo $totalRechazados; ?></p>
-              <i class="bx bx-timer"></i>
-            </div>
-          </div>
-
-          <div class="chart" id="doughnut-chart">
-            <h2>Porcentaje del Tramite</h2>
-            <canvas id="doughnut"></canvas>
-            <ul></ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="contacts">
-        <h1>Contactos</h1>
-        <div class="contacts-container">
-          <div class="contact-status">
-            <div class="contact-activity">
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/7816/7816916.png"
-                alt="User Icon" />
-              <p>Usuario <span><a target="_blank"
-                    href="#">Developer</a></span></p>
-            </div>
-            <small>1 hour ago</small>
-          </div>
         </div>
       </div>
     </div>

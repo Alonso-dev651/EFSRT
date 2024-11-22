@@ -42,7 +42,7 @@ mysqli_stmt_close($stmt);
 
             <div class="user-info">
                 <img src="https://cdn-icons-png.flaticon.com/512/7816/7816916.png" alt="user" />
-                <p><?php echo $nombres . ' ' . $apPaterno . ' ' . $apMaterno; ?></p>
+                <p><?php echo  $apPaterno . ' ' . $apMaterno . ' ' . $nombres; ?></p>
             </div>
 
             <ul>
@@ -92,10 +92,11 @@ mysqli_stmt_close($stmt);
             </li>
         </ul>
     </nav>
+
     <section class="content">
         <div class="left-content">
             <h2 class="title_formfut">FORMULARIO FUT</h2>
-            <form class="form-solicitud" method="POST" action="../src/proceso_fut.php">
+            <form class="form-solicitud" method="POST" action="../src/proceso_fut.php" enctype="multipart/form-data">
                 <div class="input-row" style="margin-bottom: 10px">
                     <div>
                         <p>Fecha: <span id="current-date"></span></p>
@@ -166,20 +167,18 @@ mysqli_stmt_close($stmt);
                 </div>
 
                 <div class="input-row">
+                    <div class="form-group">
+                        <label for="direccion">Dirección:</label>
+                        <input class="input_form" type="text" id="direccion" name="direccion" value="<?php echo $direccion; ?>">
+                    </div>
 
                     <div class="form-group">
-                    <label for="direccion">Dirección:</label>
-                    <input class="input_form" type="text" id="direccion" name="direccion" value="<?php echo $direccion; ?>">
-                </div>
-
-                    <div class="form-group">
-                    <label for="direccion">Código de Especialidad:</label>
-                    <input class="input_form" type="text" id="codEsp" name="codEsp" value="<?php echo $codEsp; ?>">
-                </div>
+                        <label for="direccion">Código de Especialidad:</label>
+                        <input class="input_form" type="text" id="codEsp" name="codEsp" value="<?php echo $codEsp; ?>">
+                    </div>
                 </div>
 
                 <div class="input-row">
-
                     <div class="form-group">
                         <label for="anioIngreso">Año Ingreso</label>
                         <input class="input_form" type="number" id="anioIngreso" name="anioIngreso" value="<?php echo $anioIngreso; ?>" required>
@@ -191,24 +190,18 @@ mysqli_stmt_close($stmt);
                     </div>
                 </div>
 
-                <div class="input-row">
-                    <div class="tipoTramite">
-                        <div class="form-group">
-                            <label for="tipoTramite">Tipo de Tramite</label>
-                            <select class="select_form" id="tipoTramite" name="tipoTramite" required>
-                                <option value="" disabled selected>Tramites</option>
-                                <?php
-                                include '../src/php/mostrar_tipoTramites.php';
-                                ?>
-                            </select>
-                        </div>
-                    </div>
+                <!-- Campo para subir archivo -->
+                <div class="form-group">
+                    <label for="archivo">Subir Archivo</label>
+                    <input type="file" name="archivo" id="archivo" class="input_form">
                 </div>
 
+                <!-- Solicitud -->
                 <div class="form-group">
                     <label for="solicitud">Solicitud</label>
                     <textarea class="solicitud" name="solicitud" id="solicitud"></textarea>
                 </div>
+
                 <div class="form-group">
                     <label for="descripcion">Descripción de Solicitud</label>
                     <textarea class="descripcion" name="descripcion" id="descripcion"></textarea>
@@ -217,7 +210,7 @@ mysqli_stmt_close($stmt);
                 <button type="submit">Enviar Solicitud</button>
             </form>
         </div>
-
+   
         <div class="right-content">
             <div class="interaction-control interactions">
                 <i class="fa-regular fa-envelope notified"></i>

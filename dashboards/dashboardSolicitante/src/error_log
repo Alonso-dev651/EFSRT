@@ -29,3 +29,49 @@ Stack trace:
 #0 /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php(77): mysqli_stmt_bind_param(Object(mysqli_stmt), 'issssssssssssss...', '2024', '2024-10-17 15:4...', '1', 'asd', 101, 'asd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'H', NULL, NULL, NULL)
 #1 {main}
   thrown in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 77
+[13-Nov-2024 21:17:22 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[13-Nov-2024 21:17:22 UTC] PHP Warning:  move_uploaded_file(../uploads/Selección de palabras clave relevantes para el negocio o sitio elegido.docx): Failed to open stream: No such file or directory in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 44
+[13-Nov-2024 21:17:22 UTC] PHP Warning:  move_uploaded_file(): Unable to move '/tmp/phph3f7Cd' to '../uploads/Selección de palabras clave relevantes para el negocio o sitio elegido.docx' in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 44
+[13-Nov-2024 21:20:12 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[13-Nov-2024 21:20:12 UTC] PHP Warning:  move_uploaded_file(../uploads/Selección de palabras clave relevantes para el negocio o sitio elegido.docx): Failed to open stream: No such file or directory in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 44
+[13-Nov-2024 21:20:12 UTC] PHP Warning:  move_uploaded_file(): Unable to move '/tmp/phpCbsB6C' to '../uploads/Selección de palabras clave relevantes para el negocio o sitio elegido.docx' in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 44
+[13-Nov-2024 21:20:31 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[13-Nov-2024 21:20:31 UTC] PHP Warning:  move_uploaded_file(../uploads/Selección de palabras clave relevantes para el negocio o sitio elegido.docx): Failed to open stream: No such file or directory in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 44
+[13-Nov-2024 21:20:31 UTC] PHP Warning:  move_uploaded_file(): Unable to move '/tmp/phpcS5Uas' to '../uploads/Selección de palabras clave relevantes para el negocio o sitio elegido.docx' in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 44
+[13-Nov-2024 21:21:59 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[13-Nov-2024 21:21:59 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 106
+[13-Nov-2024 21:29:08 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[13-Nov-2024 21:29:08 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 106
+[13-Nov-2024 21:31:17 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[13-Nov-2024 21:31:17 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 106
+[13-Nov-2024 23:32:12 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[13-Nov-2024 23:32:12 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 106
+[14-Nov-2024 23:50:25 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[14-Nov-2024 23:50:25 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 106
+[15-Nov-2024 15:08:39 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[15-Nov-2024 15:08:39 UTC] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 118
+[19-Nov-2024 01:09:38 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[19-Nov-2024 01:11:55 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[19-Nov-2024 03:35:55 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[19-Nov-2024 04:22:21 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[19-Nov-2024 21:31:37 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[19-Nov-2024 21:32:13 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[19-Nov-2024 21:32:53 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[19-Nov-2024 21:33:26 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[19-Nov-2024 21:34:26 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[19-Nov-2024 21:35:05 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[20-Nov-2024 00:39:16 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[20-Nov-2024 00:39:47 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[20-Nov-2024 00:40:31 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[20-Nov-2024 00:41:03 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[20-Nov-2024 00:53:06 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[20-Nov-2024 00:53:33 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[20-Nov-2024 02:24:18 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[21-Nov-2024 00:10:43 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[21-Nov-2024 00:23:52 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[21-Nov-2024 01:10:17 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[21-Nov-2024 03:50:36 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[21-Nov-2024 04:06:10 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[21-Nov-2024 04:09:22 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[21-Nov-2024 04:35:17 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9
+[21-Nov-2024 04:50:43 UTC] PHP Warning:  Undefined array key "tipoTramite" in /home/liveraco/proyecto.live-ra.com/EFSRT/dashboards/dashboardSolicitante/src/proceso_fut.php on line 9

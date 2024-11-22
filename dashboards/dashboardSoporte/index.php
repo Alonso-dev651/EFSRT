@@ -108,34 +108,60 @@ if ($result->num_rows > 0) {
                 <i class="fa-solid fa-address-card"></i> Registrar Personal
                 </a>
             </div>
-                <div class="fut-container">
-                <form action="" class="card-container">
-                    <?php
-                    include "php/db_conexion.php";
-                    $sql = $conexion->query("SELECT * FROM personal");
-                    while ($datos = $sql->fetch_object()) {
-                    ?>
-                    <div class="fut-card"> 
-                    <div class="fut-details">
-                        <h3><?= $datos->nombres ?> <?= $datos->apPaterno ?> <?= $datos->apMaterno ?></h3>
-                        <p><strong>Nro Doc:</strong> <?= $datos->nroDocu ?></p>
-                        <p><strong>Celular:</strong> <?= $datos->celular ?></p>
-                        <p><strong>Correo Institucional:</strong> <?= $datos->correoJP ?></p>
-                        <p><strong>Correo Personal:</strong> <?= $datos->correoPersonal ?></p>
-                        <p><strong>Estado:</strong> <?= $datos->estado ?></p>
-                        <p><strong>Tipo Personal:</strong> <?= $datos->tipoPer ?></p>
-                    </div>
-                    <div class="fut-form"> 
-                        <a href="modificar_personal.php?id=<?= $datos->codLogin ?>" class="fut-button">
-                        <i class="fa-solid fa-user-pen"></i> Editar
-                        </a>
-                    </div>
-                    </div>
-                    <?php
-                    }
-                    ?>
-                </form>
+            <div class="fut-navigation">
+                <a href="restorePassword/fr_password.php" class="fut-nav-button">
+                    <i class="fa-solid fa-address-card"></i> Cambiar Password
+                    </a>
             </div>
+                <div class="fut-container">
+    <form action="" class="card-container">
+        <?php
+        include "php/db_conexion.php";
+        $sql = $conexion->query("SELECT * FROM personal");
+
+        while ($datos = $sql->fetch_object()) {
+        ?>
+        <div class="fut-card"> 
+            <div class="fut-details">
+                <h3><?= htmlspecialchars($datos->nombres) ?> <?= htmlspecialchars($datos->apPaterno) ?> <?= htmlspecialchars($datos->apMaterno) ?></h3>
+                <p><strong>Nro Doc:</strong> <?= htmlspecialchars($datos->nroDocu) ?></p>
+                <p><strong>Celular:</strong> <?= htmlspecialchars($datos->celular) ?></p>
+                <p><strong>Correo Institucional:</strong> <?= htmlspecialchars($datos->correoJP) ?></p>
+                <p><strong>Correo Personal:</strong> <?= htmlspecialchars($datos->correoPersonal) ?></p>
+                <p><strong>Estado:</strong> <?= htmlspecialchars($datos->estado) ?></p>
+                <p><strong>Tipo Personal:</strong> <?= htmlspecialchars($datos->tipoPer) ?></p>
+                <?php
+// Captura la especialidad mediante el c¨®digo de especialidad y lo muestra
+$codEsp = $datos->codEsp; 
+$sqlEsp = "SELECT nomEsp FROM especialidad WHERE codEsp = ?";
+$stmtEsp = $conexion->prepare($sqlEsp);
+$stmtEsp->bind_param("i", $codEsp);
+$stmtEsp->execute();
+$resultEsp = $stmtEsp->get_result();
+
+// Manejar el caso en que no haya resultados
+if ($resultEsp->num_rows > 0) {
+    $filaEsp = $resultEsp->fetch_assoc();
+    $nomEsp = $filaEsp['nomEsp'];
+} else {
+    $nomEsp = "No asignado";
+}
+?>
+
+                <p><strong>Especialidad:</strong> <?= htmlspecialchars($nomEsp) ?></p>
+            </div>
+            <div class="fut-form"> 
+                <a href="modificar_personal.php?id=<?= urlencode($datos->codLogin) ?>" class="fut-button">
+                    <i class="fa-solid fa-user-pen"></i> Editar
+                </a>
+            </div>
+        </div>
+        <?php
+        }
+        ?>
+    </form>
+</div>
+
 
         </div>
 

@@ -26,8 +26,8 @@ if ($conn->connect_error) {
 $codLogin = $_SESSION['codLogin'];
 
 // Consulta para obtener los datos del ingresante
-$sql = "SELECT nombres, apPaterno, apMaterno, tipoDocu, nroDocu, codModular, telf, celular, correoJP, correoPersonal, direccion, codDis, codEsp, anioIngreso, anioEgreso 
-        FROM solicitante 
+$sql = "SELECT nombres, apPaterno, apMaterno, tipoDocu, nroDocu, telf, celular, correoJP, correoPersonal, direccion, codDis, codEsp 
+        FROM personal 
         WHERE codLogin = ?
         ORDER BY codLogin DESC";
 
@@ -37,7 +37,7 @@ $stmt->execute();
 $resultado = $stmt->get_result();
 // CÓDIGO PARA OBTENER NOMBRES Y APELLIDOS DEL USUARIO PARA PODER IMPRIMIRSE EN
 
-$sqlSolicitante = "SELECT nombres, apPaterno, apMaterno FROM solicitante WHERE codLogin = ?";
+$sqlSolicitante = "SELECT nombres, apPaterno, apMaterno FROM personal WHERE codLogin = ?";
 $stmtSolicitante = $conn->prepare($sqlSolicitante);
 $stmtSolicitante->bind_param("i", $codLogin);
 $stmtSolicitante->execute();
@@ -165,7 +165,6 @@ $rowSolicitante = $resultSolicitante->fetch_assoc();
                             echo "<p><strong>Apellido Materno:</strong> " . $fila['apMaterno'] . "</p>";
                             echo "<p><strong>Tipo de Documento:</strong> " . $fila['tipoDocu'] . "</p>";
                             echo "<p><strong>Número de Documento:</strong> " . $fila['nroDocu'] . "</p>";
-                            echo "<p><strong>Código Modular:</strong> " . $fila['codModular'] . "</p>";
                             echo "<p><strong>Teléfono:</strong> " . $fila['telf'] . "</p>";
                             echo "<p><strong>Celular:</strong> " . $fila['celular'] . "</p>";
                             echo "<p><strong>Correo JP:</strong> " . $fila['correoJP'] . "</p>";
@@ -183,8 +182,6 @@ $rowSolicitante = $resultSolicitante->fetch_assoc();
                             $nomEsp = $filaEsp['nomEsp'];
                             
                             echo "<p><strong>Especialidad:</strong> " . $nomEsp . "</p>";
-                            echo "<p><strong>Año de Ingreso:</strong> " . $fila['anioIngreso'] . "</p>";
-                            echo "<p><strong>Año de Egreso:</strong> " . $fila['anioEgreso'] . "</p>";
                         }
                     } else {
                         echo "<p>No se encontraron datos para este usuario.</p>";

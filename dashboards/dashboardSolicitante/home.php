@@ -18,6 +18,15 @@ $apPaterno = $rowSolicitante['apPaterno'];
 $apMaterno = $rowSolicitante['apMaterno'];
 $codEsp = $rowSolicitante['codEsp'];
 
+// Consulta para obtener la especialidad
+$sqlEsp = "SELECT codEsp, nomEsp FROM especialidad WHERE codEsp = ?";
+$stmtEsp = $conexion->prepare($sqlEsp);
+$stmtEsp->bind_param("i", $codEsp);
+$stmtEsp->execute();
+$resultEsp = $stmtEsp->get_result();
+$rowEsp = $resultEsp->fetch_assoc();
+$nomEsp = $rowEsp['nomEsp'];
+
 // Consulta para obtener el FUT del solicitante con o sin filtro de búsqueda
 if (!empty($searchTerm)) {
   $sqlFut = "SELECT nroFut, anioFut, fecHorIng, solicito, estado, archivo_pdf FROM fut WHERE codSoli = ? AND nroFut LIKE ?";
@@ -61,7 +70,7 @@ $resultFut = $stmtFut->get_result();
 
       <div class="user-info">
         <img src="https://cdn-icons-png.flaticon.com/512/7816/7816916.png" alt="user" />
-        <p><?php echo $nombres . ' ' . $apPaterno . ' ' . $apMaterno; ?></p>
+        <p><?php echo  $apPaterno . ' ' . $apMaterno . ' ' . $nombres; ?></p>
       </div>
 
       <ul>
@@ -139,24 +148,29 @@ $resultFut = $stmtFut->get_result();
                   <p><strong>Fecha y Hora de Ingreso:</strong> <?php echo $rowFut['fecHorIng']; ?></p>
                   <p><strong>Solicitud:</strong> <?php echo $rowFut['solicito']; ?></p>
                   <p><strong>Especialidad:</strong> <?php echo $nomEsp; ?></p>
-                  <p><strong>Estado:</strong> <?php echo $rowFut['estado'] == 'H' ? 'Habilitado' : 'Inhabilitado'; ?></p>
-
-                  <?php if (!empty($rowFut['archivo_pdf'])): ?>
-                    <div class="form-group">
-                      <label for="documento">Subir archivo</label>
-                      <p>
-                        <a href="../dashboardDocente/src/uploads/<?php echo $rowFut['archivo_pdf']; ?>" target="_blank">Abrir archivo existente</a>
+                  <p><strong>Estado:</strong>   <!--ESTADOS DE LOS FUTS-->
+                  <?php 
+                  switch ($rowFut['estado']) {
+                      case 'H': 
+                      echo 'Habilitado';break;
+                      case 'A':
+                      echo 'Asignado';
+                      break;
+                      case 'D': 
+                      echo 'Desaprobado';
+                      break;
+                      case 'R': 
+                      echo 'Rechazado';
+                      break;
+                      case 'C': 
+                      echo 'Cerrado';
+                      break;
+                      default: 
+                      echo 'Estado desconocido';
+                      }
+                      ?>
                       </p>
-                      <p>
-                        <label for="nuevoDocumento">Subir nuevo documento (opcional)</label>
-                        <input type="file" id="nuevoDocumento" name="nuevoDocumento">
-                        <label for="nuevoDocumento">Tamaño maximo: 2Mb</label>
-                      </p>
-                    </div>
-                    <button type="submit">Enviar</button>
-                  <?php else: ?>
-                    <label>Sin documentos para revisar</label>
-                  <?php endif; ?>
+                  
                 </form>
               </div>
             <?php } ?>

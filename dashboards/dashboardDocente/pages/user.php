@@ -25,27 +25,26 @@ if ($conn->connect_error) {
 $codLogin = $_SESSION['codLogin'];
 
 // Consulta para obtener los datos del ingresante
-$sql = "SELECT nombres, apPaterno, apMaterno, tipoDocu, nroDocu, codModular, telf, celular, correoJP, correoPersonal, direccion, codDis, codEsp, anioIngreso, anioEgreso 
-        FROM solicitante 
-        WHERE codLogin = ?
-        ORDER BY codLogin DESC";
+$sql = "SELECT nombres, apPaterno, apMaterno, tipoDocu, nroDocu, telf, celular, correoJP, correoPersonal, direccion, codDis, codEsp, estable, codigoPlaza, estado 
+        FROM personal WHERE codLogin = ? ORDER BY codLogin DESC";
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $codLogin);
 $stmt->execute();
 $resultado = $stmt->get_result();
-// CÓDIGO PARA OBTENER NOMBRES Y APELLIDOS DEL USUARIO PARA PODER IMPRIMIRSE EN
 
-$sqlSolicitante = "SELECT nombres, apPaterno, apMaterno FROM solicitante WHERE codLogin = ?";
-$stmtSolicitante = $conn->prepare($sqlSolicitante);
-$stmtSolicitante->bind_param("i", $codLogin);
-$stmtSolicitante->execute();
-$resultSolicitante = $stmtSolicitante->get_result();
 
-$rowSolicitante = $resultSolicitante->fetch_assoc();
-$nombres = $rowSolicitante['nombres'];
-$apPaterno = $rowSolicitante['apPaterno'];
-$apMaterno = $rowSolicitante['apMaterno'];
+// CÓDIGO PARA OBTENER NOMBRES Y APELLIDOS DEL DOCENTE PARA PODER IMPRIMIRSE EN SU DASHBOARD PERFIL DE USUARIO
+$sqlDocente = "SELECT nombres, apPaterno, apMaterno FROM personal WHERE codLogin = ?";
+$stmtDocente = $conn->prepare($sqlDocente);
+$stmtDocente->bind_param("i", $codLogin);
+$stmtDocente->execute();
+$resultDocente = $stmtDocente->get_result();
+
+$rowDocente = $resultDocente->fetch_assoc();
+$nombres = $rowDocente['nombres'];
+$apPaterno = $rowDocente['apPaterno'];
+$apMaterno = $rowDocente['apMaterno'];
 
 ?>
 <!DOCTYPE html>
@@ -131,10 +130,6 @@ $apMaterno = $rowSolicitante['apMaterno'];
   <section class="content">
     <div class="left-content">
       <div class="search-and-check">
-        <form class="search-box">
-          <input type="text" placeholder="Buscar..." />
-          <i class="bx bx-search"></i>
-        </form>
         <div class="user-profile">
           <h1>Perfil de Usuario</h1>
           <div class="user-container">
@@ -151,6 +146,22 @@ $apMaterno = $rowSolicitante['apMaterno'];
                 $resultEsp = $stmtEsp->get_result();
                 $filaEsp = $resultEsp->fetch_assoc();
                 $nomEsp = $filaEsp['nomEsp'];
+                
+                // Capturar el código del distrito
+                $codDis = $fila['codDis'];
+                
+                // Consulta para obtener el nombre del departamento, provincia y distrito
+                $sqlUbigeo = "SELECT nomDptoUbi, nomProvUbi, nomDisUbi FROM ubigeo WHERE codUbi = ?";
+                $stmtUbigeo = $conn->prepare($sqlUbigeo);
+                $stmtUbigeo->bind_param("s", $codDis);
+                $stmtUbigeo->execute();
+                $resultUbigeo = $stmtUbigeo->get_result();
+                $filaUbigeo = $resultUbigeo->fetch_assoc();
+                $nomDpto = $filaUbigeo['nomDptoUbi'];
+                $nomProv = $filaUbigeo['nomProvUbi'];
+                $nomDis = $filaUbigeo['nomDisUbi'];
+                
+                
             ?>
                 <div class="profile-container">
                   <img src="https://cdn-icons-png.flaticon.com/512/7816/7816916.png" alt="user" />
@@ -175,16 +186,16 @@ $apMaterno = $rowSolicitante['apMaterno'];
                     <?php
                     echo "<div><span><strong>Número de Documento:</strong></span><p>" . $fila['nroDocu'] . "</p></div>";
                     echo "<div><span><strong>Correo JP:</strong></span><p> " . $fila['correoJP'] . "</p></div>";
+                    echo "<div><span><strong>Correo Personal:</strong></span><p> " . $fila['correoPersonal'] . "</p></div>";
                     echo "<div><span><strong>Dirección:</strong></span><p> " . $fila['direccion'] . "</p></div>";
-                    echo "<div><span><strong>Año de Ingreso:</strong></span><p> " . $fila['anioIngreso'] . "</p></div>";
                     ?>
                   </div>
                   <div class="data-column">
                     <?php
-                    echo "<div><span><strong>Código Modular:</strong></span><p> " . $fila['codModular'] . "</p></div>";
-                    echo "<div><span><strong>Correo Personal:</strong></span><p> " . $fila['correoPersonal'] . "</p></div>";
                     echo "<div><span><strong>Código de Distrito:</strong></span><p> " . $fila['codDis'] . "</p></div>";
-                    echo "<div><span><strong>Año de Egreso:</strong></span><p> " . $fila['anioEgreso'] . "</p></div>";
+                    echo "<div><span><strong>Departamento:</strong></span><p>" . $nomDpto . "</p></div>";
+                    echo "<div><span><strong>Provincia:</strong></span><p>" . $nomProv . "</p></div>";
+                    echo "<div><span><strong>Distrito:</strong></span><p>" . $nomDis . "</p></div>";
                     ?>
                   </div>
                 </div>
@@ -197,61 +208,6 @@ $apMaterno = $rowSolicitante['apMaterno'];
             $stmt->close();
             $conn->close();
             ?>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="right-content">
-      <div class="interaction-control interactions">
-        <i class="fa-regular fa-envelope notified"></i>
-        <i class="fa-regular fa-bell notified"></i>
-        <div class="toggle" onclick="switchTheme()">
-          <div class="mode-icon moon">
-            <i class="bx bxs-moon"></i>
-          </div>
-          <div class="mode-icon sun hidden">
-            <i class="bx bxs-sun"></i>
-          </div>
-        </div>
-      </div>
-
-      <div class="analytics">
-        <h1>Analisis</h1>
-        <div class="analytics-container">
-          <div class="total-events">
-            <div class="event-number card">
-              <h2>Aprobados</h2>
-              <p>1</p>
-              <i class="bx bx-check-circle"></i>
-            </div>
-            <div class="event-number card">
-              <h2>Pendientes</h2>
-              <p>2</p>
-              <i class="bx bx-timer"></i>
-            </div>
-          </div>
-
-          <div class="chart" id="doughnut-chart">
-            <h2>Porcentaje del Tramite</h2>
-            <canvas id="doughnut"></canvas>
-            <ul></ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="contacts">
-        <h1>Contactos</h1>
-        <div class="contacts-container">
-          <div class="contact-status">
-            <div class="contact-activity">
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/7816/7816916.png"
-                alt="User Icon" />
-              <p>Usuario <span><a target="_blank"
-                    href="https://github.com/Alonso-dev651">Developer</a></span></p>
-            </div>
-            <small>1 hour ago</small>
           </div>
         </div>
       </div>
