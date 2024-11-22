@@ -145,10 +145,7 @@ $resultFut = $stmtFut->get_result();
       </div>
 
       <div class="upcoming-events">
-        <!-- Para mostrar el fut en el dashboard -->
-        <div style="display: flex; justify-content: center; align-items: center;">
-          <h1>FUTs DEL ALUMNO</h1>
-        </div>
+        <h1 class="title_content">FUTs DEL ALUMNO</h1>
         <div class="fut-container">
           <?php
           // Función para buscar solicitante por codSoli
