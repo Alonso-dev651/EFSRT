@@ -160,6 +160,17 @@ form select {
     background-color: #0056b3;
 }
 
+.password-container {
+    position: relative;
+}
+
+.password-container i {
+    position: absolute;
+    top: 65%;
+    transform: translateY(-50%);
+    left: 89%;
+}
+
 /* Ajustes Responsive */
 @media (max-width: 768px) {
     .left-section {
