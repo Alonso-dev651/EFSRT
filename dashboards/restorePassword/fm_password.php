@@ -26,7 +26,6 @@
       width: 100%;
       text-align: center;
     }
-
     .container img {
       max-width: 250px;
       margin-bottom: 20px;
