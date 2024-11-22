@@ -113,6 +113,13 @@ body {
     margin-top: 15px;
 }
 
+.right-section form small {
+    font-size: 0.7rem;
+    color: #4c4c4c;
+    display: block;
+    margin-top: 2px;
+  }
+
 .right-section form input,
 form select {
     width: 100%;

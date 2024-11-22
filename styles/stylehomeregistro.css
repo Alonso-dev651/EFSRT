@@ -1,0 +1,214 @@
+@font-face {
+  font-family: 'PardoLemonMilk';
+  src: url('/src/fonts/lemon_milk/LEMONMILK-Bold.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PardoRajdhani';
+  src: url('/src/fonts/Rajdhani/Rajdhani-SemiBold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* General */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+}
+
+.login-container {
+  display: flex;
+  min-height: 100vh;
+  align-items: stretch;
+}
+
+.left-section {
+  flex: 1;
+  background: linear-gradient(135deg, #1A2340, #243b55);
+  opacity: 98%;
+  padding: 60px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #ffffff;
+}
+
+.left-section h1 {
+  font-size: 2rem;
+  font-family: 'PardoLemonMilk', Courier, monospace;
+  color: #4db5ff;
+  text-wrap: balance;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.left-section p {
+  font-size: 1.1rem;
+  font-family: 'PardoRajdhani', Courier, monospace;
+  color: #d1d5db;
+  max-width: 500px;
+  line-height: 1.8;
+  margin-bottom: 30px;
+}
+
+.left-section img {
+  max-width: 70%;
+  border-radius: 12px;
+  margin-top: 20px;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  filter: drop-shadow(0 1px 1px rgba(255, 255, 255, 0.5));
+}
+
+/* Secci贸n derecha */
+.right-section {
+  flex: 1;
+  background-color: #FEFDE8;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.right-section .logo img {
+  max-width: 300px;
+  margin-bottom: 20px;
+}
+
+.right-section h2 {
+  font-size: 1.8rem;
+  color: #2a3f54;
+  margin-bottom: 10px;
+}
+
+.right-section p {
+  font-size: 1rem;
+  color: #4c4c4c;
+  margin-bottom: 20px;
+}
+
+/* Formulario */
+.right-section form {
+  width: 100%;
+  max-width: 400px;
+  background-color: #fafafa;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.right-section form label {
+  font-size: 0.9rem;
+  color: #4c4c4c;
+  display: block;
+  margin-top: 15px;
+}
+
+.right-section form small {
+  font-size: 0.7rem;
+  color: #4c4c4c;
+  display: block;
+  margin-top: 2px;
+}
+
+.right-section form input,
+form select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+.right-section form input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.right-section form .reset-link {
+  display: block;
+  font-size: 0.9rem;
+  color: #007bff;
+  text-decoration: none;
+  margin-top: 10px;
+  text-align: right;
+}
+
+.right-section form .reset-link:hover {
+  text-decoration: underline;
+}
+
+.right-section form .login-button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.right-section form .login-button:hover {
+  background-color: #0056b3;
+}
+
+.password-container {
+  position: relative;
+}
+
+.password-container i {
+  position: absolute;
+  top: 65%;
+  transform: translateY(-50%);
+  left: 89%;
+}
+
+/* Ajustes Responsive */
+@media (max-width: 768px) {
+  .left-section {
+      display: none;
+  }
+
+  .right-section {
+      width: 100%;
+      padding: 20px;
+  }
+
+  .right-section form {
+      width: 90%;
+      margin: 0 auto;
+  }
+
+  .right-section h2 {
+      font-size: 1.5rem;
+  }
+
+  .right-section p {
+      font-size: 0.9rem;
+  }
+
+  .right-section form input {
+      font-size: 0.9rem;
+      padding: 10px;
+  }
+
+  .right-section form .login-button {
+      font-size: 0.9rem;
+      padding: 10px;
+  }
+}
