@@ -28,26 +28,26 @@ $sqlFut = "SELECT f.nroFut, f.anioFut, f.fecHorIng, f.solicito, f.estado, s.codE
 
 // Si hay un termino de busqueda
 if (!empty($searchTerm)) {
-    $searchTerm = "%$searchTerm%";
-    $sqlFut .= " AND f.nroFut LIKE ?";
+  $searchTerm = "%$searchTerm%";
+  $sqlFut .= " AND f.nroFut LIKE ?";
 }
 
 // Si hay un estado seleccionado
 if (!empty($estado)) {
-    $sqlFut .= " AND f.estado = ?";
+  $sqlFut .= " AND f.estado = ?";
 }
 
 $stmtFut = $conexion->prepare($sqlFut);
 
 // Vincular parametros a la consulta
 if (!empty($searchTerm) && !empty($estado)) {
-    $stmtFut->bind_param("iss", $codEspCoordinador, $searchTerm, $estado); //por busqueda y estado
+  $stmtFut->bind_param("iss", $codEspCoordinador, $searchTerm, $estado); //por busqueda y estado
 } elseif (!empty($searchTerm)) {
-    $stmtFut->bind_param("is", $codEspCoordinador, $searchTerm); //por busqueda
+  $stmtFut->bind_param("is", $codEspCoordinador, $searchTerm); //por busqueda
 } elseif (!empty($estado)) {
-    $stmtFut->bind_param("is", $codEspCoordinador, $estado); //por estado
+  $stmtFut->bind_param("is", $codEspCoordinador, $estado); //por estado
 } else {
-    $stmtFut->bind_param("i", $codEspCoordinador); //sin filtros
+  $stmtFut->bind_param("i", $codEspCoordinador); //sin filtros
 }
 
 $stmtFut->execute();
@@ -149,30 +149,30 @@ $resultFut = $stmtFut->get_result();
         <div class="input-row">
           <div class="especialidad">
             <div class="form-group">
-        <button onclick="window.location.href='../../formularios/formulariodocs/formulariosdocs.php'" class="fut-button">Subir archivos</button>
-        <form method="POST" action="">
-            <label for="estado">Filtrar por estado:</label>
-            <select id="estado" name="estado" onchange="this.form.submit()">
-                <option value="" disabled selected>Seleccionar estado</option>
-                <option value="H" <?php echo (isset($_POST['estado']) && $_POST['estado'] == 'H') ? 'selected' : ''; ?>>Habilitado</option>
-                <option value="A" <?php echo (isset($_POST['estado']) && $_POST['estado'] == 'A') ? 'selected' : ''; ?>>Aprobado</option>
-                <option value="D" <?php echo (isset($_POST['estado']) && $_POST['estado'] == 'D') ? 'selected' : ''; ?>>Desaprobado</option>
-                <option value="R" <?php echo (isset($_POST['estado']) && $_POST['estado'] == 'R') ? 'selected' : ''; ?>>Rechazado</option>
-                <option value="C" <?php echo (isset($_POST['estado']) && $_POST['estado'] == 'C') ? 'selected' : ''; ?>>Cerrado</option>
-            </select>
-        </form>
-        <form method="POST" action="">
-            <button type="submit" name="clear_filter" class="fut-button">Quitar Filtro</button>
-        </form>
-    </div>
-<?php
-// Verificar si se hizo clic en el botón para quitar el filtro
-if (isset($_POST['clear_filter'])) {
-    // Eliminar el valor del filtro de estado
-    unset($_POST['estado']);
-    header("Location: " . $_SERVER['PHP_SELF']); // Recargar la página
-    exit();
-} ?>
+              <button onclick="window.location.href='../../formularios/formulariodocs/formulariosdocs.php'" class="fut-button">Subir archivos</button>
+              <form method="POST" action="">
+                <label for="estado">Filtrar por estado:</label>
+                <select id="estado" name="estado" onchange="this.form.submit()">
+                  <option value="" disabled selected>Seleccionar estado</option>
+                  <option value="H" <?php echo (isset($_POST['estado']) && $_POST['estado'] == 'H') ? 'selected' : ''; ?>>Habilitado</option>
+                  <option value="A" <?php echo (isset($_POST['estado']) && $_POST['estado'] == 'A') ? 'selected' : ''; ?>>Aprobado</option>
+                  <option value="D" <?php echo (isset($_POST['estado']) && $_POST['estado'] == 'D') ? 'selected' : ''; ?>>Desaprobado</option>
+                  <option value="R" <?php echo (isset($_POST['estado']) && $_POST['estado'] == 'R') ? 'selected' : ''; ?>>Rechazado</option>
+                  <option value="C" <?php echo (isset($_POST['estado']) && $_POST['estado'] == 'C') ? 'selected' : ''; ?>>Cerrado</option>
+                </select>
+              </form>
+              <form method="POST" action="">
+                <button type="submit" name="clear_filter" class="fut-button">Quitar Filtro</button>
+              </form>
+            </div>
+            <?php
+            // Verificar si se hizo clic en el botón para quitar el filtro
+            if (isset($_POST['clear_filter'])) {
+              // Eliminar el valor del filtro de estado
+              unset($_POST['estado']);
+              header("Location: " . $_SERVER['PHP_SELF']); // Recargar la página
+              exit();
+            } ?>
           </div>
         </div>
 
@@ -186,43 +186,43 @@ if (isset($_POST['clear_filter'])) {
                 <p><strong>Solicitud:</strong> <?php echo $rowFut['solicito']; ?></p>
                 <p><strong>Estado:</strong>
                   <?php
-                    switch ($rowFut['estado']) {
-                      case 'H':
-                        echo 'Habilitado';
-                        break;
-                      case 'A':
-                        echo 'Aprobado';
-                        break;
-                      case 'D':
-                        echo 'Desaprobado';
-                        break;
-                      case 'R':
-                        echo 'Rechazado';
-                        break;
-                      case 'C':
-                        echo 'Cerrado';
-                        break;
-                      default:
-                        echo 'Estado desconocido';
-                    }
+                  switch ($rowFut['estado']) {
+                    case 'H':
+                      echo 'Habilitado';
+                      break;
+                    case 'A':
+                      echo 'Aprobado';
+                      break;
+                    case 'D':
+                      echo 'Desaprobado';
+                      break;
+                    case 'R':
+                      echo 'Rechazado';
+                      break;
+                    case 'C':
+                      echo 'Cerrado';
+                      break;
+                    default:
+                      echo 'Estado desconocido';
+                  }
                   ?>
                 </p>
               </div>
-                <form action="Asignar_fut/index.php" method="post" class="fut-form">
-                  <input type="hidden" name="nroFut" value="<?php echo $rowFut['nroFut']; ?>">
-                  <input type="hidden" name="anioFut" value="<?php echo $rowFut['anioFut']; ?>">
-                  <input type="hidden" name="fecHorIng" value="<?php echo $rowFut['fecHorIng']; ?>">
-                  <input type="hidden" name="solicito" value="<?php echo $rowFut['solicito']; ?>">
-                  <input type="hidden" name="estado" value="<?php echo $rowFut['estado']; ?>">
-                  <input type="hidden" name="codCoordinador" value="<?php echo $codSoli; ?>">
-                
-                  <?php if ($rowFut['codCoordinador'] == null): ?>
-                    <button type="submit" class="fut-button">Asignar Docente</button>
-                  <?php else: ?>
-                    <button type="button" class="fut-button"> Docente ya asignado</button>
-                    <button type="submit" formaction="Gestionar_fut/gestionar.php" class="fut-button">Gestionar FUT</button>
-                  <?php endif; ?>
-                </form>
+              <form action="Asignar_fut/index.php" method="post" class="fut-form">
+                <input type="hidden" name="nroFut" value="<?php echo $rowFut['nroFut']; ?>">
+                <input type="hidden" name="anioFut" value="<?php echo $rowFut['anioFut']; ?>">
+                <input type="hidden" name="fecHorIng" value="<?php echo $rowFut['fecHorIng']; ?>">
+                <input type="hidden" name="solicito" value="<?php echo $rowFut['solicito']; ?>">
+                <input type="hidden" name="estado" value="<?php echo $rowFut['estado']; ?>">
+                <input type="hidden" name="codCoordinador" value="<?php echo $codSoli; ?>">
+
+                <?php if ($rowFut['codCoordinador'] == null): ?>
+                  <button type="submit" class="fut-button">Asignar Docente</button>
+                <?php else: ?>
+                  <button type="button" class="fut-button"> Docente ya asignado</button>
+                  <button type="submit" formaction="Gestionar_fut/gestionar.php" class="fut-button">Gestionar FUT</button>
+                <?php endif; ?>
+              </form>
             </div>
           <?php } ?>
         </div>

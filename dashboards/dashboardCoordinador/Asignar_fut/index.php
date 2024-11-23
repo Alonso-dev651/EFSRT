@@ -7,19 +7,19 @@ $codCoordinador = $_SESSION['codLogin'];
 include '../formulario_fut/php/db_conexion.php';
 
 if ($conexion->connect_error) {
-    die("Error de conexión: " . $conexion->connect_error);
+  die("Error de conexión: " . $conexion->connect_error);
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nroFut = $_POST['nroFut'];
-    $anioFut = $_POST['anioFut'];
-    $fecHorIng = $_POST['fecHorIng'];
-    $solicito = $_POST['solicito'];
-    $estado = $_POST['estado'];
+  $nroFut = $_POST['nroFut'];
+  $anioFut = $_POST['anioFut'];
+  $fecHorIng = $_POST['fecHorIng'];
+  $solicito = $_POST['solicito'];
+  $estado = $_POST['estado'];
 }
 
 // Obtener datos de aea
-$sqlCodSoli= "SELECT codSoli FROM fut WHERE nroFut = ?";
+$sqlCodSoli = "SELECT codSoli FROM fut WHERE nroFut = ?";
 $stmtCodSoli = $conexion->prepare($sqlCodSoli);
 $stmtCodSoli->bind_param("i", $nroFut);
 $stmtCodSoli->execute();
@@ -30,7 +30,7 @@ $codSoli = $rowCodSoli['codSoli'];
 
 
 // Obtener datos de especialidad
-$sqlEspecialidad= "SELECT codEsp FROM solicitante WHERE codLogin = ?";
+$sqlEspecialidad = "SELECT codEsp FROM solicitante WHERE codLogin = ?";
 $stmtEspecialidad = $conexion->prepare($sqlEspecialidad);
 $stmtEspecialidad->bind_param("i", $codSoli);
 $stmtEspecialidad->execute();
@@ -41,7 +41,7 @@ $codEspecialidad = $rowEspecialidad['codEsp'];
 
 
 
-$sqlNEspecialidad= "SELECT codEsp, nomEsp FROM especialidad WHERE codEsp = ?";
+$sqlNEspecialidad = "SELECT codEsp, nomEsp FROM especialidad WHERE codEsp = ?";
 $stmtNEspecialidad = $conexion->prepare($sqlNEspecialidad);
 $stmtNEspecialidad->bind_param("i", $codEspecialidad);
 $stmtNEspecialidad->execute();
@@ -54,7 +54,7 @@ $sqlDocente = "SELECT codLogin, correoJP FROM personal WHERE tipoPer = 'DOCENTE'
 $resultDocente = $conexion->query($sqlDocente);
 
 if (!$resultDocente) {
-    die("Error en la consulta de docentes: " . $conexion->error);
+  die("Error en la consulta de docentes: " . $conexion->error);
 }
 
 // Obtener datos del solicitante
@@ -100,6 +100,7 @@ mysqli_stmt_close($stmt);
   <script defer src="../main.js"></script>
   <title>EFSRT Dashboard</title>
 </head>
+
 <body>
   <nav class="main-menu">
     <div>
@@ -170,137 +171,84 @@ mysqli_stmt_close($stmt);
       </div>
 
       <div class="upcoming-events">
-      <div class="form-solicitud">
-      <h1>Asignar Docente al FUT</h1>
+        <div class="form-solicitud">
+          <h1>Asignar Docente al FUT</h1>
 
-      <div class="fut-info">
-        <p><strong>Número FUT:</strong> <?php echo htmlspecialchars($nroFut); ?></p>
-        <p><strong>Año FUT:</strong> <?php echo htmlspecialchars($anioFut); ?></p>
-        <p><strong>Especialidad:</strong> <?php echo htmlspecialchars($nomEspecialidad); ?></p>
-        <p><strong>Fecha y Hora de Ingreso:</strong> <?php echo htmlspecialchars($fecHorIng); ?></p>
-        <p><strong>Solicitud:</strong> <?php echo htmlspecialchars($solicito); ?></p>
-        <p><strong>Estado:</strong>
-                  <?php
-                    switch ($estado) {
-                      case 'H':
-                        echo 'Habilitado';
-                        break;
-                      case 'A':
-                        echo 'Aprobado';
-                        break;
-                      case 'D':
-                        echo 'Desaprobado';
-                        break;
-                      case 'R':
-                        echo 'Rechazado';
-                        break;
-                      case 'C':
-                        echo 'Cerrado';
-                        break;
-                      default:
-                        echo 'Estado desconocido';
-                    }
-                  ?>
-                </p>
-        <?php echo htmlspecialchars($nombres . ' ' . $apPaterno . ' ' . $apMaterno); ?>
-      </div>
+          <div class="fut-info">
+            <p><strong>Número FUT:</strong> <?php echo htmlspecialchars($nroFut); ?></p>
+            <p><strong>Año FUT:</strong> <?php echo htmlspecialchars($anioFut); ?></p>
+            <p><strong>Especialidad:</strong> <?php echo htmlspecialchars($nomEspecialidad); ?></p>
+            <p><strong>Fecha y Hora de Ingreso:</strong> <?php echo htmlspecialchars($fecHorIng); ?></p>
+            <p><strong>Solicitud:</strong> <?php echo htmlspecialchars($solicito); ?></p>
+            <p><strong>Estado:</strong>
+              <?php
+              switch ($estado) {
+                case 'H':
+                  echo 'Habilitado';
+                  break;
+                case 'A':
+                  echo 'Aprobado';
+                  break;
+                case 'D':
+                  echo 'Desaprobado';
+                  break;
+                case 'R':
+                  echo 'Rechazado';
+                  break;
+                case 'C':
+                  echo 'Cerrado';
+                  break;
+                default:
+                  echo 'Estado desconocido';
+              }
+              ?>
+            </p>
+            <?php echo htmlspecialchars($nombres . ' ' . $apPaterno . ' ' . $apMaterno); ?>
+          </div>
 
-      <form action="asignar_fut.php" method="post" class="input-row">
-        <input type="hidden" name="nroFut" value="<?php echo $nroFut; ?>">
-        <input type="hidden" name="anioFut" value="<?php echo $anioFut; ?>">
-        
+          <form action="asignar_fut.php" method="post" class="input-row">
+            <input type="hidden" name="nroFut" value="<?php echo $nroFut; ?>">
+            <input type="hidden" name="anioFut" value="<?php echo $anioFut; ?>">
 
-        <div class="form-group">
-          <label for="descripcion">Descripción</label>
-          <textarea name="descripcion" id="descripcion" rows="3" required></textarea>
-        </div>
 
-        <div class="form-group">
-          <label for="docente">Seleccionar Docente</label>
-          <select name="docente" id="docente" required>
-            <option value="" disabled selected>Seleccione un docente</option>
-            <?php
-            if ($resultDocente->num_rows > 0) {
-                while ($rowDocente = $resultDocente->fetch_assoc()) {
+            <div class="form-group">
+              <label for="descripcion">Descripción</label>
+              <textarea name="descripcion" id="descripcion" rows="3" required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="docente">Seleccionar Docente</label>
+              <select name="docente" id="docente" required>
+                <option value="" disabled selected>Seleccione un docente</option>
+                <?php
+                if ($resultDocente->num_rows > 0) {
+                  while ($rowDocente = $resultDocente->fetch_assoc()) {
                     echo "<option value='" . htmlspecialchars($rowDocente['codLogin']) . "'>" . htmlspecialchars($rowDocente['correoJP']) . "</option>";
+                  }
+                } else {
+                  echo "<option value='' disabled>No hay docentes disponibles</option>";
                 }
-            } else {
-                echo "<option value='' disabled>No hay docentes disponibles</option>";
-            }
-            ?>
-          </select>
-        </div>
-
-        <input type="number" name="coordinador" value="<?php echo $codCoordinador; ?>">
-
-
-
-
-        <div class="buttons-row">
-          <button type="submit" class="btn-submit">Asignar FUT al Docente</button>
-          <button type="button" class="btn-cancel" onclick="window.location.href='../../dashboardCoordinador/home.php';">Cancelar</button>
-        </div>
-      </form>
-    </div>
-
-      </div>
-    </div>
-    <div class="right-content">
-      <div class="interaction-control interactions">
-        <i class="fa-regular fa-envelope notified"></i>
-        <i class="fa-regular fa-bell notified"></i>
-        <div class="toggle" onclick="switchTheme()">
-          <div class="mode-icon moon">
-            <i class="bx bxs-moon"></i>
-          </div>
-          <div class="mode-icon sun hidden">
-            <i class="bx bxs-sun"></i>
-          </div>
-        </div>
-      </div>
-
-      <div class="analytics">
-        <h1>Analisis</h1>
-        <div class="analytics-container">
-          <div class="total-events">
-            <div class="event-number card">
-              <h2>Aprobados</h2>
-              <p>1</p>
-              <i class="bx bx-check-circle"></i>
+                ?>
+              </select>
             </div>
-            <div class="event-number card">
-              <h2>Pendientes</h2>
-              <p>2</p>
-              <i class="bx bx-timer"></i>
-            </div>
-          </div>
 
-          <div class="chart" id="doughnut-chart">
-            <h2>Porcentaje del Tramite</h2>
-            <canvas id="doughnut"></canvas>
-            <ul></ul>
-          </div>
-        </div>
-      </div>
+            <input type="number" name="coordinador" value="<?php echo $codCoordinador; ?>">
 
-      <div class="contacts">
-        <h1>Contactos</h1>
-        <div class="contacts-container">
-          <div class="contact-status">
-            <div class="contact-activity">
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/7816/7816916.png"
-                alt="User Icon" />
-              <p>Usuario <span><a target="_blank"
-                    href="https://github.com/Alonso-dev651/EFSRT">Developer</a></span></p>
+
+
+
+            <div class="buttons-row">
+              <button type="submit" class="btn-submit">Asignar FUT al Docente</button>
+              <button type="button" class="btn-cancel" onclick="window.location.href='../../dashboardCoordinador/home.php';">Cancelar</button>
             </div>
-            <small>1 hour ago</small>
-          </div>
+          </form>
         </div>
+
       </div>
     </div>
   </section>
 </body>
+
 </html>
 
 

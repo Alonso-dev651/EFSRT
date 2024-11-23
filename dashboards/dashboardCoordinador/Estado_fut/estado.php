@@ -101,18 +101,18 @@ $estado = $_POST['estado'] ?? '';
       </div>
 
       <div class="upcoming-events">
-      <div class="fut-container">
-      <h1 style="text-align: center;">Detalles del FUT</h1>
-      <div class="fut-card">
-          <div class="fut-details">
+        <div class="fut-container">
+          <h1 style="text-align: center;">Detalles del FUT</h1>
+          <div class="fut-card">
+            <div class="fut-details">
               <p><strong>Número FUT:</strong> <?php echo htmlspecialchars($nroFut); ?></p>
               <p><strong>Año FUT:</strong> <?php echo htmlspecialchars($anioFut); ?></p>
               <p><strong>Fecha y Hora de Ingreso:</strong> <?php echo htmlspecialchars($fecHorIng); ?></p>
               <p><strong>Solicitud:</strong> <?php echo htmlspecialchars($solicito); ?></p>
               <p><strong>Estado:</strong> <?php echo $estado == 'H' ? 'Habilitado' : 'Inhabilitado'; ?></p>
+            </div>
           </div>
-    </div>
   </section>
 </body>
-</html>
 
+</html>
