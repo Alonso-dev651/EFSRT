@@ -16,6 +16,7 @@ mysqli_stmt_close($stmt);
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,12 +28,12 @@ mysqli_stmt_close($stmt);
 
     <h1>FORMULARIO FUT</h1>
     <form class="form-solicitud" method="POST" action="proceso_fut.php">
-    <div class="input-row" style="margin-bottom: 10px">
+        <div class="input-row" style="margin-bottom: 10px">
             <div>
                 <p>Fecha: <span id="current-date"></span></p>
                 <p>Hora: <span id="current-time"></span></p>
             </div>
-             <button type="button" onclick="window.location.href='../home.php'">Cancelar trámite</button>
+            <button type="button" onclick="window.location.href='../home.php'">Cancelar trámite</button>
         </div>
 
         <div class="input-row">
@@ -103,7 +104,7 @@ mysqli_stmt_close($stmt);
         </div>
 
         <div class="input-row">
-            
+
             <div class="form-group">
                 <label for="anioIngreso">Año Ingreso</label>
                 <input type="number" id="anioIngreso" name="anioIngreso" value="<?php echo $anioIngreso; ?>" required>
@@ -115,27 +116,27 @@ mysqli_stmt_close($stmt);
             </div>
         </div>
 
-    <div class="input-row">
-        <div class="tipoTramite">
-            <div class="form-group">
-                <label for="tipoTramite">Tipo de Tramite</label>
-                <select id="tipoTramite" name="tipoTramite" required>
-                    <option value="" disabled selected>Tramites</option>
-                    <?php
-                    include 'php/mostrar_tipoTramites.php';
-                    ?>
-                </select>
+        <div class="input-row">
+            <div class="tipoTramite">
+                <div class="form-group">
+                    <label for="tipoTramite">Tipo de Tramite</label>
+                    <select id="tipoTramite" name="tipoTramite" required>
+                        <option value="" disabled selected>Tramites</option>
+                        <?php
+                        include 'php/mostrar_tipoTramites.php';
+                        ?>
+                    </select>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <label for="solicitud">Descripción de Solicitud</label>
-        <textarea class="solicitud" name="solicitud" id="solicitud"></textarea>
-    </div>
+        <div class="form-group">
+            <label for="solicitud">Descripción de Solicitud</label>
+            <textarea class="solicitud" name="solicitud" id="solicitud"></textarea>
+        </div>
 
-    <button type="submit">Enviar Solicitud</button>
-</form>
+        <button type="submit">Enviar Solicitud</button>
+    </form>
 
 
     <script src="js/cargarDatos.js"></script>
