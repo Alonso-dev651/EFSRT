@@ -156,7 +156,6 @@ $resultFut = $stmtFut->get_result();
                   <option value="" disabled selected>Seleccionar estado</option>
                   <option value="H" <?php echo (isset($_POST['estado']) && $_POST['estado'] == 'H') ? 'selected' : ''; ?>>Habilitado</option>
                   <option value="A" <?php echo (isset($_POST['estado']) && $_POST['estado'] == 'A') ? 'selected' : ''; ?>>Aprobado</option>
-                  <option value="D" <?php echo (isset($_POST['estado']) && $_POST['estado'] == 'D') ? 'selected' : ''; ?>>Desaprobado</option>
                   <option value="R" <?php echo (isset($_POST['estado']) && $_POST['estado'] == 'R') ? 'selected' : ''; ?>>Rechazado</option>
                   <option value="C" <?php echo (isset($_POST['estado']) && $_POST['estado'] == 'C') ? 'selected' : ''; ?>>Cerrado</option>
                 </select>
