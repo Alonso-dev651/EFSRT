@@ -18,10 +18,10 @@ $apPaternoDocente = $rowSolicitante['apPaterno'];
 $apMaternoDocente = $rowSolicitante['apMaterno'];
 
 // Consulta para obtener los datos del solicitante y el tipo de trámite basado en nroFut
-$query = "SELECT s.apPaterno, s.apMaterno, s.nombres, s.tipoDocu, s.nroDocu, s.codModular, s.telf, s.celular, s.correoJP, s.correoPersonal, s.direccion, s.anioIngreso, s.anioEgreso, f.codTT, f.solicito, f.descripcion, f.comentario, f.estado, a.nombre_archivo 
+$query = "SELECT s.apPaterno, s.apMaterno, s.nombres, s.tipoDocu, s.nroDocu, s.codModular, s.telf, s.celular, s.correoJP, s.correoPersonal, s.direccion, s.anioIngreso, s.anioEgreso, f.codTT, f.solicito, f.descripcion, f.comentario, f.estado, f.archivo_pdf 
           FROM solicitante s 
           INNER JOIN fut f ON s.codLogin = f.codSoli 
-          INNER JOIN archivos a ON s.codLogin = a.codLogin 
+          LEFT JOIN archivos a ON s.codLogin = a.codLogin 
           WHERE f.nroFut = ?;";
 
 $stmt = mysqli_prepare($conexion, $query);
@@ -61,7 +61,7 @@ mysqli_stmt_close($stmt);
 
             <div class="user-info">
                 <img src="https://cdn-icons-png.flaticon.com/512/7816/7816916.png" alt="user" />
-                <p><?php echo $nombres . ' ' . $apPaterno . ' ' . $apMaterno; ?></p>
+                <p><?php echo $nombresDocente . ' ' . $apPaternoDocente . ' ' . $apMaternoDocente; ?></p>
             </div>
             <ul>
                 <li class="nav-item">
@@ -78,17 +78,10 @@ mysqli_stmt_close($stmt);
                     </a>
                 </li>
 
-                <li class="nav-item active">
-                    <a href="formularioFUT.php">
-                        <i class="fa fa-arrow-trend-up nav-icon"></i>
-                        <span class="nav-text">Tramite</span>
-                    </a>
-                </li>
-
                 <li class="nav-item">
                     <a href="estado.php">
                         <i class="fa-solid fa-chart-simple nav-icon"></i>
-                        <span class="nav-text">Estado</span>
+                        <span class="nav-text">Estado de FUTs</span>
                     </a>
                 </li>
                 <br>
@@ -111,7 +104,6 @@ mysqli_stmt_close($stmt);
             </li>
         </ul>
     </nav>
-
     <section class="content">
         <div class="left-content">
             <h1>FORMULARIO FUT</h1>
@@ -248,7 +240,7 @@ mysqli_stmt_close($stmt);
 
                         <?php if (!empty($archivo_pdf)): ?>
                             <p>
-                                <a href="../../dashboardSolicitante/src/uploads/<?php echo $archivo_pdf; ?>" target="_blank">Abrir archivo existente</a>
+                                <a href="uploads/<?php echo $archivo_pdf; ?>" target="_blank">Abrir archivo existente</a>
                             </p>
                             <p>
                                 <label for="nuevoDocumento">Subir nuevo documento (opcional)</label>
@@ -263,6 +255,7 @@ mysqli_stmt_close($stmt);
                     </div>
 
                     <button type="submit">Enviar</button>
+                    <button type="button" style="background-color:red;" onclick="window.location.href='../home.php'">Cancelar</button>
                 </form>
             </div>
 
