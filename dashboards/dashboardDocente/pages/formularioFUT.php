@@ -230,7 +230,6 @@ mysqli_stmt_close($stmt);
                         <select id="estado" name="estado" required>
                             <option value="H" <?php echo ($estado == 'H') ? 'selected' : ''; ?>>HABILITADO</option>
                             <option value="A" <?php echo ($estado == 'A') ? 'selected' : ''; ?>>APROBADO</option>
-                            <option value="D" <?php echo ($estado == 'D') ? 'selected' : ''; ?>>DESAPROBADO</option>
                         </select>
                         <input type="hidden" name="nroFut" value="<?php echo $nroFut; ?>">
                     </div>
