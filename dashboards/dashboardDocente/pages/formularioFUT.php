@@ -16,7 +16,7 @@ $rowSolicitante = $resultSolicitante->fetch_assoc();
 $nombresDocente = $rowSolicitante['nombres'];
 $apPaternoDocente = $rowSolicitante['apPaterno'];
 $apMaternoDocente = $rowSolicitante['apMaterno'];
-          
+
 // Consulta para obtener los datos del solicitante y el tipo de trámite basado en nroFut
 $query = "SELECT s.apPaterno, s.apMaterno, s.nombres, s.tipoDocu, s.nroDocu, s.codModular, s.telf, s.celular, s.correoJP, s.correoPersonal, s.direccion, s.anioIngreso, s.anioEgreso, f.codTT, f.solicito, f.descripcion, f.comentario, f.estado, a.nombre_archivo 
           FROM solicitante s 
@@ -277,8 +277,6 @@ mysqli_stmt_close($stmt);
         }
         setInterval(updateDateTime, 1000);
     </script>
-
-
 
     <script>
         //Funcion para indicar maximo tamaño de archivo pdf

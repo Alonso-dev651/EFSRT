@@ -146,10 +146,10 @@ $apMaterno = $rowDocente['apMaterno'];
                 $resultEsp = $stmtEsp->get_result();
                 $filaEsp = $resultEsp->fetch_assoc();
                 $nomEsp = $filaEsp['nomEsp'];
-                
+
                 // Capturar el código del distrito
                 $codDis = $fila['codDis'];
-                
+
                 // Consulta para obtener el nombre del departamento, provincia y distrito
                 $sqlUbigeo = "SELECT nomDptoUbi, nomProvUbi, nomDisUbi FROM ubigeo WHERE codUbi = ?";
                 $stmtUbigeo = $conn->prepare($sqlUbigeo);
@@ -160,8 +160,8 @@ $apMaterno = $rowDocente['apMaterno'];
                 $nomDpto = $filaUbigeo['nomDptoUbi'];
                 $nomProv = $filaUbigeo['nomProvUbi'];
                 $nomDis = $filaUbigeo['nomDisUbi'];
-                
-                
+
+
             ?>
                 <div class="profile-container">
                   <img src="https://cdn-icons-png.flaticon.com/512/7816/7816916.png" alt="user" />
