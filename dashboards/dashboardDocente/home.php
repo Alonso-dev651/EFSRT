@@ -118,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nroFut'])) {
         <li class="nav-item">
           <a href="pages/estado.php">
             <i class="fa-solid fa-chart-simple nav-icon"></i>
-            <span class="nav-text">Estado de FUTs</span>
+            <span class="nav-text">Estado</span>
           </a>
         </li>
         <br>

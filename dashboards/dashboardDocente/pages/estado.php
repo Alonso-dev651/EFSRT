@@ -102,7 +102,7 @@ $apMaterno = $rowSolicitante['apMaterno'];
                 <li class="nav-item active">
                     <a href="estado.php">
                         <i class="fa-solid fa-chart-simple nav-icon"></i>
-                        <span class="nav-text">Estado de FUTs</span>
+                        <span class="nav-text">Estado</span>
                     </a>
                 </li>
                 <br>
@@ -135,10 +135,10 @@ $apMaterno = $rowSolicitante['apMaterno'];
                 </form>
             </div>
 
-            <div class="card">
+            <div class="card" style="padding-top: 20px;">
                 <h1>Detalles del FUT</h1>
-                <p><strong>N��mero FUT:</strong> <?php echo htmlspecialchars($nroFut); ?></p>
-                <p><strong>A�0�9o FUT:</strong> <?php echo htmlspecialchars($anioFut); ?></p>
+                <p><strong>Número FUT:</strong> <?php echo htmlspecialchars($nroFut); ?></p>
+                <p><strong>Año FUT:</strong> <?php echo htmlspecialchars($anioFut); ?></p>
                 <p><strong>Fecha y Hora de Ingreso:</strong> <?php echo htmlspecialchars($fecHorIng); ?></p>
                 <p><strong>Solicitud:</strong> <?php echo htmlspecialchars($solicito); ?></p>
                 <p><strong>Estado:</strong> <?php echo $estado == 'H' ? 'Habilitado' : 'Inhabilitado'; ?></p>
