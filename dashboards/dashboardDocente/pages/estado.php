@@ -135,7 +135,7 @@ $apMaterno = $rowSolicitante['apMaterno'];
                 </form>
             </div>
 
-            <div class="card" style="margin-top: 20px;">
+            <div class="card" style="margin-top: 20px; padding:1rem;">
                 <h1>Detalles del FUT</h1>
                 <p><strong>Número FUT:</strong> <?php echo htmlspecialchars($nroFut); ?></p>
                 <p><strong>Año FUT:</strong> <?php echo htmlspecialchars($anioFut); ?></p>
