@@ -113,6 +113,7 @@ mysqli_stmt_close($stmt);
                         <div>
                             <p>Fecha: <span id="current-date"></span></p>
                             <p>Hora: <span id="current-time"></span></p>
+                              <p>Nro de FUT: <?php echo $nroFut; ?></p>
                         </div>
                     </div>
                     <div class="input-row">
