@@ -1055,7 +1055,8 @@ body::-webkit-scrollbar-thumb {
 
 .fut-navigation {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 20px;
   width: 100%;
 }
 
@@ -1063,10 +1064,12 @@ body::-webkit-scrollbar-thumb {
   padding: 10px 20px;
   background-color: #28a745;
   color: #fff;
+  text-decoration: none;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  text-align: center;
 }
 
 .fut-nav-button:hover {
