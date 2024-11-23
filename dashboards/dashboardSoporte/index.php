@@ -30,7 +30,7 @@ if ($result->num_rows > 0) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
     <link href="Icons_Dash/Logo.ico" rel="icon">
     <script defer src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -110,8 +110,8 @@ if ($result->num_rows > 0) {
             </div>
             <div class="fut-navigation">
                 <a href="restorePassword/fr_password.php" class="fut-nav-button">
-                    <i class="fa-solid fa-address-card"></i> Cambiar Password
-                    </a>
+                <i class="fa-solid fa-lock"></i> Cambiar Password
+                </a>
             </div>
                 <div class="fut-container">
     <form action="" class="card-container">
