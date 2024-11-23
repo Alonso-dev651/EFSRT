@@ -114,182 +114,129 @@ mysqli_stmt_close($stmt);
       </div>
 
       <div class="upcoming-events">
-      <h1 style="text-align: center;">FORMULARIO FUT</h1>
-      <form class="form-solicitud" method="POST" action="proceso_fut.php">
-    <div class="input-row">
-        <div>
-            <p>Fecha: <span id="current-date"></span></p>
-            <p>Hora: <span id="current-time"></span></p>
-        </div>
-    </div>
+        <h1 style="text-align: center;">FORMULARIO FUT</h1>
+        <form class="form-solicitud" method="POST" action="proceso_fut.php">
+          <div class="input-row">
+            <div>
+              <p>Fecha: <span id="current-date"></span></p>
+              <p>Hora: <span id="current-time"></span></p>
+            </div>
+          </div>
 
-    <div class="input-row">
+          <div class="input-row">
             <div class="form-group">
-                <label for="apPaterno">Apellido Paterno</label>
-                <input type="text" id="apPaterno" name="apPaterno" value="<?php echo $apPaterno; ?>" required>
+              <label for="apPaterno">Apellido Paterno</label>
+              <input type="text" id="apPaterno" name="apPaterno" value="<?php echo $apPaterno; ?>" required>
             </div>
 
             <div class="form-group">
-                <label for="apMaterno">Apellido Materno</label>
-                <input type="text" id="apMaterno" name="apMaterno" value="<?php echo $apMaterno; ?>" required>
+              <label for="apMaterno">Apellido Materno</label>
+              <input type="text" id="apMaterno" name="apMaterno" value="<?php echo $apMaterno; ?>" required>
             </div>
 
             <div class="form-group">
-                <label for="nombres">Nombres</label>
-                <input type="text" id="nombres" name="nombres" value="<?php echo $nombres; ?>" required>
+              <label for="nombres">Nombres</label>
+              <input type="text" id="nombres" name="nombres" value="<?php echo $nombres; ?>" required>
             </div>
-        </div>
+          </div>
 
-    <div class="input-row">
+          <div class="input-row">
             <div class="form-group">
-                <label for="tipoDocu">Tipo de documento</label>
-                <select id="tipoDocu" name="tipoDocu" required>
-                    <option value="DNI" <?php echo ($tipoDocu == 'DNI') ? 'selected' : ''; ?>>DNI</option>
-                    <option value="CEX" <?php echo ($tipoDocu == 'CEX') ? 'selected' : ''; ?>>CEX</option>
-                    <option value="PAS" <?php echo ($tipoDocu == 'PAS') ? 'selected' : ''; ?>>PAS</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="nroDocu">Nro Documento</label>
-                <input type="text" id="nroDocu" name="nroDocu" value="<?php echo $nroDocu; ?>" required>
+              <label for="tipoDocu">Tipo de documento</label>
+              <select id="tipoDocu" name="tipoDocu" required>
+                <option value="DNI" <?php echo ($tipoDocu == 'DNI') ? 'selected' : ''; ?>>DNI</option>
+                <option value="CEX" <?php echo ($tipoDocu == 'CEX') ? 'selected' : ''; ?>>CEX</option>
+                <option value="PAS" <?php echo ($tipoDocu == 'PAS') ? 'selected' : ''; ?>>PAS</option>
+              </select>
             </div>
 
             <div class="form-group">
-                <label for="codModular">Código Modular</label>
-                <input type="text" id="codModular" name="codModular" value="<?php echo $codModular; ?>">
-            </div>
-        </div>
-
-        <div class="input-row">
-            <div class="form-group">
-                <label for="telf">Teléfono</label>
-                <input type="text" id="telf" name="telf" value="<?php echo $telf; ?>">
+              <label for="nroDocu">Nro Documento</label>
+              <input type="text" id="nroDocu" name="nroDocu" value="<?php echo $nroDocu; ?>" required>
             </div>
 
             <div class="form-group">
-                <label for="celular">Celular</label>
-                <input type="text" id="celular" name="celular" value="<?php echo $celular; ?>">
+              <label for="codModular">Código Modular</label>
+              <input type="text" id="codModular" name="codModular" value="<?php echo $codModular; ?>">
             </div>
-        </div>
-        <div class="input-row">
+          </div>
+
+          <div class="input-row">
             <div class="form-group">
-                <label for="correoJP">Correo Institucional:</label>
-                <input type="email" id="correoJP" name="correoJP" value="<?php echo $correoJP; ?>" required>
+              <label for="telf">Teléfono</label>
+              <input type="text" id="telf" name="telf" value="<?php echo $telf; ?>">
             </div>
 
             <div class="form-group">
-                <label for="correoPersonal">Correo Personal</label>
-                <input type="email" id="correoPersonal" name="correoPersonal" value="<?php echo $correoPersonal; ?>" required>
+              <label for="celular">Celular</label>
+              <input type="text" id="celular" name="celular" value="<?php echo $celular; ?>">
             </div>
-        </div>
-
-        <div class="input-row">
-        <div class="form-group">
-            <label for="direccion">Dirección:</label>
-            <input type="text" id="direccion" name="direccion" value="<?php echo $direccion; ?>">
-        </div>
-        </div>
-
-        <div class="input-row">      
+          </div>
+          <div class="input-row">
             <div class="form-group">
-                <label for="anioIngreso">Año Ingreso</label>
-                <input type="number" id="anioIngreso" name="anioIngreso" value="<?php echo $anioIngreso; ?>" required>
+              <label for="correoJP">Correo Institucional:</label>
+              <input type="email" id="correoJP" name="correoJP" value="<?php echo $correoJP; ?>" required>
             </div>
 
             <div class="form-group">
-                <label for="anioEgreso">Año Egreso (Opcional)</label>
-                <input type="number" id="anioEgreso" name="anioEgreso" value="<?php echo $anioEgreso; ?>">
+              <label for="correoPersonal">Correo Personal</label>
+              <input type="email" id="correoPersonal" name="correoPersonal" value="<?php echo $correoPersonal; ?>" required>
             </div>
-        </div>
-        
-        <div class="input-row">
-        <div class="tipoTramite">
+          </div>
+
+          <div class="input-row">
             <div class="form-group">
+              <label for="direccion">Dirección:</label>
+              <input type="text" id="direccion" name="direccion" value="<?php echo $direccion; ?>">
+            </div>
+          </div>
+
+          <div class="input-row">
+            <div class="form-group">
+              <label for="anioIngreso">Año Ingreso</label>
+              <input type="number" id="anioIngreso" name="anioIngreso" value="<?php echo $anioIngreso; ?>" required>
+            </div>
+
+            <div class="form-group">
+              <label for="anioEgreso">Año Egreso (Opcional)</label>
+              <input type="number" id="anioEgreso" name="anioEgreso" value="<?php echo $anioEgreso; ?>">
+            </div>
+          </div>
+
+          <div class="input-row">
+            <div class="tipoTramite">
+              <div class="form-group">
                 <label for="tipoTramite">Tipo de Tramite</label>
                 <select id="tipoTramite" name="tipoTramite" required>
-                    <option value="" disabled selected>Tramites</option>
-                    <?php
-                    include './php/mostrar_tipoTramites.php';
-                    ?>
+                  <option value="" disabled selected>Tramites</option>
+                  <?php
+                  include './php/mostrar_tipoTramites.php';
+                  ?>
                 </select>
-            </div>
-        </div>
-    </div>
-
-        <div class="input-row">  
-        <div class="form-group">
-        <label for="solicitud">Descripción de Solicitud</label>
-        <textarea class="solicitud" name="solicitud" id="solicitud"></textarea>
-    </div>
-    </div>
-        
-
-    <!-- Botones al final -->
-    <div class="input-row buttons-row">
-        <button type="button" class="btn-cancel" onclick="window.location.href='../home.php'">Cancelar trámite</button>
-        <button type="submit" class="btn-submit">Enviar Solicitud</button>
-    </div>
-</form>
-
-    <script src="./js/cargarDatos.js"></script>
-    <script src="./js/fechaHora.js"></script>
-      </div>
-    </div>
-    <div class="right-content">
-      <div class="interaction-control interactions">
-        <i class="fa-regular fa-envelope notified"></i>
-        <i class="fa-regular fa-bell notified"></i>
-        <div class="toggle" onclick="switchTheme()">
-          <div class="mode-icon moon">
-            <i class="bx bxs-moon"></i>
-          </div>
-          <div class="mode-icon sun hidden">
-            <i class="bx bxs-sun"></i>
-          </div>
-        </div>
-      </div>
-
-      <div class="analytics">
-        <h1>Analisis</h1>
-        <div class="analytics-container">
-          <div class="total-events">
-            <div class="event-number card">
-              <h2>Aprobados</h2>
-              <p>1</p>
-              <i class="bx bx-check-circle"></i>
-            </div>
-            <div class="event-number card">
-              <h2>Pendientes</h2>
-              <p>2</p>
-              <i class="bx bx-timer"></i>
+              </div>
             </div>
           </div>
 
-          <div class="chart" id="doughnut-chart">
-            <h2>Porcentaje del Tramite</h2>
-            <canvas id="doughnut"></canvas>
-            <ul></ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="contacts">
-        <h1>Contactos</h1>
-        <div class="contacts-container">
-          <div class="contact-status">
-            <div class="contact-activity">
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/7816/7816916.png"
-                alt="User Icon" />
-              <p>Usuario <span><a target="_blank"
-                    href="https://github.com/Alonso-dev651/EFSRT">Developer</a></span></p>
+          <div class="input-row">
+            <div class="form-group">
+              <label for="solicitud">Descripción de Solicitud</label>
+              <textarea class="solicitud" name="solicitud" id="solicitud"></textarea>
             </div>
-            <small>1 hour ago</small>
           </div>
-        </div>
+
+
+          <!-- Botones al final -->
+          <div class="input-row buttons-row">
+            <button type="button" class="btn-cancel" onclick="window.location.href='../home.php'">Cancelar trámite</button>
+            <button type="submit" class="btn-submit">Enviar Solicitud</button>
+          </div>
+        </form>
+
+        <script src="./js/cargarDatos.js"></script>
+        <script src="./js/fechaHora.js"></script>
       </div>
     </div>
   </section>
 </body>
+
 </html>
