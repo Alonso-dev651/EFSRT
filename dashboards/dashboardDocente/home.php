@@ -111,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nroFut'])) {
         <li class="nav-item">
           <a href="pages/formularioFUT.php">
             <i class="fa fa-arrow-trend-up nav-icon"></i>
-            <span class="nav-text">Tramite</span>
+            <span class="nav-text">Tramites</span>
           </a>
         </li>
 

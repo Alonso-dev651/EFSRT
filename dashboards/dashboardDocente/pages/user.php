@@ -100,7 +100,7 @@ $apMaterno = $rowDocente['apMaterno'];
           </a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item ">
           <a href="estado.php">
             <i class="fa-solid fa-chart-simple nav-icon"></i>
             <span class="nav-text">Estado</span>

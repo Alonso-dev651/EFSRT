@@ -61,7 +61,7 @@ mysqli_stmt_close($stmt);
 
             <div class="user-info">
                 <img src="https://cdn-icons-png.flaticon.com/512/7816/7816916.png" alt="user" />
-                <p><?php echo $nombresDocente . ' ' . $apPaternoDocente . ' ' . $apMaternoDocente; ?></p>
+                <p><?php echo $nombres . ' ' . $apPaterno . ' ' . $apMaterno; ?></p>
             </div>
             <ul>
                 <li class="nav-item">
@@ -111,6 +111,7 @@ mysqli_stmt_close($stmt);
             </li>
         </ul>
     </nav>
+
     <section class="content">
         <div class="left-content">
             <h1>FORMULARIO FUT</h1>
