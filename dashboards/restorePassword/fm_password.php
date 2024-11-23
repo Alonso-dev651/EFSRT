@@ -161,7 +161,7 @@
   <div class="container">
     <img src="https://proyecto.live-ra.com/src/images/logo-jose-pardo.png" alt="Logo Jose Pardo">
     <h2>Cambiar Contraseña</h2>
-    <form action="cambiar_contraseña.php" method="POST">
+    <form action="cambiar_contrasena.php" method="POST">
       <div>
         <label for="email" class="form-label">Correo Electrónico</label>
         <input type="email" class="form-control" id="email" name="email" required>
