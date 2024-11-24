@@ -7,7 +7,7 @@ $codCoordinador = $_SESSION['codLogin'];
 include '../formulario_fut/php/db_conexion.php';
 
 if ($conexion->connect_error) {
-  die("Error de conexi√≥n: " . $conexion->connect_error);
+  die("Error de conexion: " . $conexion->connect_error);
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -69,7 +69,7 @@ $nombres = $rowSolicitante['nombres'];
 $apPaterno = $rowSolicitante['apPaterno'];
 $apMaterno = $rowSolicitante['apMaterno'];
 
-// Consulta para obtener los datos del solicitante y el tipo de tr®¢mite basado en nroFut
+// Consulta para obtener los datos del solicitante y el tipo de tr√°mite basado en nroFut
 $query = "SELECT s.apPaterno, s.apMaterno, s.nombres, s.tipoDocu, s.nroDocu, s.codModular, s.telf, s.celular, s.correoJP, s.correoPersonal, s.direccion, s.anioIngreso, s.anioEgreso, e.nomEsp, f.codTT, f.solicito, f.descripcion, f.fecHoraAsignaDocente,f.estado, f.archivo_pdf, f.codDocente, tt.descTT
           FROM solicitante s 
           INNER JOIN fut f ON s.codLogin = f.codSoli
@@ -182,13 +182,13 @@ mysqli_stmt_close($stmt);
           <h1>Asignar Docente al FUT</h1>
 
           <div class="fut-info">
-            <p><strong>N√∫mero FUT:</strong> <?php echo htmlspecialchars($nroFut); ?></p>
-            <p><strong>A√±o FUT:</strong> <?php echo htmlspecialchars($anioFut); ?></p>
+            <p><strong>NÁÖ§mero FUT:</strong> <?php echo htmlspecialchars($nroFut); ?></p>
+            <p><strong>AÂ∏Ωo FUT:</strong> <?php echo htmlspecialchars($anioFut); ?></p>
             <p><strong>Especialidad:</strong> <?php echo htmlspecialchars($nomEspecialidad); ?></p>
             <p><strong>Fecha y Hora de Ingreso:</strong> <?php echo htmlspecialchars($fecHorIng); ?></p>
             <p><strong>Solicitante:</strong> <?php echo $nombresSoli . ' ' . $apPaternoSoli . ' ' . $apMaternoSoli; ?></p>
-          <p><strong>Area Acad®¶mica:</strong> <?php echo $nomEsp; ?></p>
-          <p><strong>Tipo de tr®¢mite:</strong>
+          <p><strong>Area Acad√©mica:</strong> <?php echo $nomEsp; ?></p>
+          <p><strong>Tipo de tr√°mite:</strong>
 
                         <?php if (!empty($descTT)): ?>
                                 <?php echo $descTT; ?>
@@ -226,7 +226,7 @@ mysqli_stmt_close($stmt);
 
 
             <div class="form-group">
-              <label for="descripcion">Descripci√≥n</label>
+              <label for="descripcion">DescripciË¥∏n</label>
               <textarea name="descripcion" id="descripcion" rows="3" required></textarea>
             </div>
 
