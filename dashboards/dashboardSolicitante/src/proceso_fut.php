@@ -104,25 +104,94 @@ try {
         );
 
         if (mysqli_stmt_execute($stmt)) {
-            echo "<h1>Solicitud enviada correctamente.</h1>";
-            echo "<p>Gracias por completar el formulario. Puedes generar tu reporte PDF a continuación:</p>";
-
-            // Formulario oculto para enviar los datos a PruebaV.php en una nueva ventana
             echo '
-            <form action="fpdf/PruebaV.php" method="POST" target="_blank">
-                <input type="hidden" name="codsoli" value="' . htmlspecialchars($codSoli) . '">
-                <input type="hidden" name="apPaterno" value="' . htmlspecialchars($apPaterno) . '">
-                <input type="hidden" name="apMaterno" value="' . htmlspecialchars($apMaterno) . '">
-                <input type="hidden" name="nombres" value="' . htmlspecialchars($nombres) . '">
-                <input type="hidden" name="aniofut" value="' . htmlspecialchars($anioFut) . '">
-                <input type="hidden" name="codtt" value="' . htmlspecialchars($codTT) . '">
-                <input type="hidden" name="codEsp" value="' . htmlspecialchars($codEsp) . '">
-                <input type="hidden" name="solicito" value="' . htmlspecialchars($solicito) . '">
-                <input type="hidden" name="descripcion" value="' . htmlspecialchars($descripcion) . '">
-                <button type="submit">Generar Reporte PDF</button>
-            </form>';
-
-            echo '<button type="button" onclick="window.location.href=\'../home.php\'">Redirigir al Home</button>';
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Solicitud Enviada</title>
+                <style>
+                    body {
+                        background-color: #FEFDE8;
+                        margin: 0;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 100vh;
+                        font-family: Arial, sans-serif;
+                        color: #333;
+                    }
+        
+                    .container {
+                        text-align: center;
+                        background: #fff;
+                        border-radius: 10px;
+                        padding: 30px;
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                        max-width: 400px;
+                        width: 90%;
+                    }
+        
+                    h1 {
+                        font-size: 24px;
+                        margin-bottom: 20px;
+                        color: #444;
+                    }
+        
+                    p {
+                        margin-bottom: 20px;
+                        color: #666;
+                        line-height: 1.5;
+                    }
+        
+                    form, .redirect {
+                        margin-bottom: 15px;
+                    }
+        
+                    button {
+                        background-color: #4CAF50;
+                        color: white;
+                        padding: 10px 20px;
+                        border: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        font-size: 16px;
+                    }
+        
+                    button:hover {
+                        background-color: #45a049;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <h1>Solicitud enviada correctamente</h1>
+                    <p>Gracias por completar el formulario. Puedes generar tu reporte PDF a continuación:</p>
+        
+                    <!-- Formulario para generar reporte PDF -->
+                    <form action="fpdf/PruebaV.php" method="POST" target="_blank">
+                        <input type="hidden" name="codsoli" value="' . htmlspecialchars($codSoli) . '">
+                        <input type="hidden" name="apPaterno" value="' . htmlspecialchars($apPaterno) . '">
+                        <input type="hidden" name="apMaterno" value="' . htmlspecialchars($apMaterno) . '">
+                        <input type="hidden" name="nombres" value="' . htmlspecialchars($nombres) . '">
+                        <input type="hidden" name="aniofut" value="' . htmlspecialchars($anioFut) . '">
+                        <input type="hidden" name="codtt" value="' . htmlspecialchars($codTT) . '">
+                        <input type="hidden" name="codEsp" value="' . htmlspecialchars($codEsp) . '">
+                        <input type="hidden" name="solicito" value="' . htmlspecialchars($solicito) . '">
+                        <input type="hidden" name="descripcion" value="' . htmlspecialchars($descripcion) . '">
+                        <button type="submit">Generar Reporte PDF</button>
+                    </form>
+        
+                    <!-- Botón para redirigir al home -->
+                    <div class="redirect">
+                        <button type="button" onclick="window.location.href=\'../home.php\'">Redirigir al Home</button>
+                    </div>
+                </div>
+            </body>
+            </html>';
+        }
+        
             exit;
         } else {
             throw new Exception("Error al ingresar la solicitud: " . mysqli_error($conexion));
