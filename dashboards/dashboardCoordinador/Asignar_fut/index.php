@@ -69,11 +69,18 @@ $nombres = $rowSolicitante['nombres'];
 $apPaterno = $rowSolicitante['apPaterno'];
 $apMaterno = $rowSolicitante['apMaterno'];
 
-$query = "SELECT apPaterno, apMaterno, nombres, tipoDocu, nroDocu, codModular, telf, celular, correoJP, correoPersonal, direccion, anioIngreso, anioEgreso FROM solicitante WHERE codLogin = ?";
+// Consulta para obtener los datos del solicitante y el tipo de tr¨¢mite basado en nroFut
+$query = "SELECT s.apPaterno, s.apMaterno, s.nombres, s.tipoDocu, s.nroDocu, s.codModular, s.telf, s.celular, s.correoJP, s.correoPersonal, s.direccion, s.anioIngreso, s.anioEgreso, e.nomEsp, f.codTT, f.solicito, f.descripcion, f.fecHoraAsignaDocente,f.estado, f.archivo_pdf, f.codDocente, tt.descTT
+          FROM solicitante s 
+          INNER JOIN fut f ON s.codLogin = f.codSoli
+          INNER JOIN especialidad e ON s.codEsp = e.codEsp
+          LEFT JOIN tipoTramite tt ON f.codTT = tt.codTT
+          WHERE f.nroFut = ?;";
+
 $stmt = mysqli_prepare($conexion, $query);
-mysqli_stmt_bind_param($stmt, 'i', $codLogin);
+mysqli_stmt_bind_param($stmt, 'i', $nroFut);
 mysqli_stmt_execute($stmt);
-mysqli_stmt_bind_result($stmt, $apPaterno, $apMaterno, $nombres, $tipoDocu, $nroDocu, $codModular, $telf, $celular, $correoJP, $correoPersonal, $direccion, $anioIngreso, $anioEgreso);
+mysqli_stmt_bind_result($stmt, $apPaternoSoli, $apMaternoSoli, $nombresSoli, $tipoDocu, $nroDocu, $codModular, $telf, $celular, $correoJP, $correoPersonal, $direccion, $anioIngreso, $anioEgreso, $nomEsp, $codTTSeleccionado, $solicito, $descripcion, $fecHoraAsignaDocente,$estado, $archivo_pdf, $codDocente, $descTT);
 mysqli_stmt_fetch($stmt);
 mysqli_stmt_close($stmt);
 
@@ -179,7 +186,18 @@ mysqli_stmt_close($stmt);
             <p><strong>AÃ±o FUT:</strong> <?php echo htmlspecialchars($anioFut); ?></p>
             <p><strong>Especialidad:</strong> <?php echo htmlspecialchars($nomEspecialidad); ?></p>
             <p><strong>Fecha y Hora de Ingreso:</strong> <?php echo htmlspecialchars($fecHorIng); ?></p>
+            <p><strong>Solicitante:</strong> <?php echo $nombresSoli . ' ' . $apPaternoSoli . ' ' . $apMaternoSoli; ?></p>
+          <p><strong>Area Acad¨¦mica:</strong> <?php echo $nomEsp; ?></p>
+          <p><strong>Tipo de tr¨¢mite:</strong>
+
+                        <?php if (!empty($descTT)): ?>
+                                <?php echo $descTT; ?>
+                        <?php else: ?>
+                            No hay tipo tramite asignado, debe resolverse en la base de datos.
+                        <?php endif; ?></p>
             <p><strong>Solicitud:</strong> <?php echo htmlspecialchars($solicito); ?></p>
+                      <p><strong>Detalle:</strong> <?php echo $descripcion; ?></p>
+
             <p><strong>Estado:</strong>
               <?php
               switch ($estado) {
@@ -188,9 +206,6 @@ mysqli_stmt_close($stmt);
                   break;
                 case 'A':
                   echo 'Aprobado';
-                  break;
-                case 'D':
-                  echo 'Desaprobado';
                   break;
                 case 'R':
                   echo 'Rechazado';
@@ -203,10 +218,9 @@ mysqli_stmt_close($stmt);
               }
               ?>
             </p>
-            <?php echo htmlspecialchars($nombres . ' ' . $apPaterno . ' ' . $apMaterno); ?>
           </div>
 
-          <form action="asignar_fut.php" method="post" class="input-row">
+          <form style="padding-top:10px;" action="asignar_fut.php" method="post" class="input-row">
             <input type="hidden" name="nroFut" value="<?php echo $nroFut; ?>">
             <input type="hidden" name="anioFut" value="<?php echo $anioFut; ?>">
 

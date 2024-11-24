@@ -6,16 +6,6 @@ include '../src/php/nuevoFut.php';
 $nroFut = $_POST['nroFut']; // Obtener nroFut del formulario anterior
 include '../src/php/db_conexion.php';
 
-// Para jalar los datos e imprimirse
-$sqlSolicitante = "SELECT nombres, apPaterno, apMaterno FROM personal WHERE codLogin = ?";
-$stmtSolicitante = $conexion->prepare($sqlSolicitante);
-$stmtSolicitante->bind_param("i", $codSoli);
-$stmtSolicitante->execute();
-$resultSolicitante = $stmtSolicitante->get_result();
-$rowSolicitante = $resultSolicitante->fetch_assoc();
-$nombresDocente = $rowSolicitante['nombres'];
-$apPaternoDocente = $rowSolicitante['apPaterno'];
-$apMaternoDocente = $rowSolicitante['apMaterno'];
 
 // Consulta para obtener los datos del solicitante y el tipo de trámite basado en nroFut
 $query = "SELECT s.apPaterno, s.apMaterno, s.nombres, s.tipoDocu, s.nroDocu, s.codModular, s.telf, s.celular, s.correoJP, s.correoPersonal, s.direccion, s.anioIngreso, s.anioEgreso, f.codTT, f.solicito, f.descripcion, f.comentario, f.estado, f.archivo_pdf 
@@ -113,7 +103,6 @@ mysqli_stmt_close($stmt);
                         <div>
                             <p>Fecha: <span id="current-date"></span></p>
                             <p>Hora: <span id="current-time"></span></p>
-                              <p>Nro de FUT: <?php echo $nroFut; ?></p>
                         </div>
                     </div>
                     <div class="input-row">
@@ -219,7 +208,7 @@ mysqli_stmt_close($stmt);
                 </div>
 
                 <!-- Formulario para comentarios -->
-                <form class="form-solicitud" action="../src/procesar_docente.php" method="POST" id="miFormulario" enctype="multipart/form-data">
+                <div class="form-solicitud" action="../src/procesar_docente.php" method="POST" id="miFormulario" enctype="multipart/form-data">
                     <h2>Comentarios y Estado</h2>
                     <div class="form-group">
                         <label for="comentario">Comentario</label>
@@ -231,6 +220,7 @@ mysqli_stmt_close($stmt);
                         <select id="estado" name="estado" required>
                             <option value="H" <?php echo ($estado == 'H') ? 'selected' : ''; ?>>HABILITADO</option>
                             <option value="A" <?php echo ($estado == 'A') ? 'selected' : ''; ?>>APROBADO</option>
+                            <option value="D" <?php echo ($estado == 'D') ? 'selected' : ''; ?>>DESAPROBADO</option>
                         </select>
                         <input type="hidden" name="nroFut" value="<?php echo $nroFut; ?>">
                     </div>
@@ -253,10 +243,8 @@ mysqli_stmt_close($stmt);
                         echo 'Tamaño máximo del archivo: ' . ini_get('upload_max_filesize');
                         ?>
                     </div>
-
-                    <button type="submit">Enviar</button>
                     <button type="button" style="background-color:red;" onclick="window.location.href='../home.php'">Cancelar</button>
-                </form>
+                </div>
             </div>
 
         </div>

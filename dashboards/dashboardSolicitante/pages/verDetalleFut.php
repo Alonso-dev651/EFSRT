@@ -1,10 +1,32 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 session_start();
 $codSoli = $_SESSION['codLogin'];
-include 'src/php/db_conexion.php';
+include '../src/php/db_conexion.php';
+$nroFut = isset($_POST['nroFut']) ? $_POST['nroFut'] : null;
+$anioFut = isset($_POST['anioFut']) ? $_POST['anioFut'] : null;
 
-// Recibir el término de búsqueda
-$searchTerm = isset($_POST['search']) ? trim($_POST['search']) : '';
+if ($nroFut) {
+
+    // Consulta para obtener los datos del solicitante y el tipo de trámite basado en nroFut
+        $query = "SELECT s.apPaterno, s.apMaterno, s.nombres, s.tipoDocu, s.nroDocu, s.codModular, s.telf, s.celular, s.correoJP, s.correoPersonal, s.direccion, s.anioIngreso, s.anioEgreso, e.nomEsp, f.codTT, f.solicito, f.descripcion, f.fecHoraAsignaDocente,f.estado, f.archivo_pdf, f.codDocente, tt.descTT
+                  FROM solicitante s 
+                  INNER JOIN fut f ON s.codLogin = f.codSoli
+                  INNER JOIN especialidad e ON s.codEsp = e.codEsp
+                  LEFT JOIN tipoTramite tt ON f.codTT = tt.codTT
+                  WHERE f.nroFut = ?;";
+
+        $stmt = mysqli_prepare($conexion, $query);
+        mysqli_stmt_bind_param($stmt, 'i', $nroFut);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_bind_result($stmt, $apPaternoSoli, $apMaternoSoli, $nombresSoli, $tipoDocu, $nroDocu, $codModular, $telf, $celular, $correoJP, $correoPersonal, $direccion, $anioIngreso, $anioEgreso, $nomEsp, $codTTSeleccionado, $solicito, $descripcion, $fecHoraAsignaDocente,$estado, $archivo_pdf, $codDocente, $descTT);
+        mysqli_stmt_fetch($stmt);
+        mysqli_stmt_close($stmt);
+} else {
+    $futDetails = "<p>Faltan datos necesarios para mostrar los detalles.</p>";
+}
 
 // Consulta para obtener los datos del solicitante
 $sqlSolicitante = "SELECT nombres, apPaterno, apMaterno, codEsp FROM solicitante WHERE codLogin = ?";
@@ -52,7 +74,7 @@ $resultFut = $stmtFut->get_result();
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../styles.css">
   <link href="../../../src/images/Logo.ico" rel="icon">
   <script defer src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -62,7 +84,7 @@ $resultFut = $stmtFut->get_result();
 </head>
 
 <body>
-  <nav class="main-menu">
+    <nav class="main-menu">
     <div>
       <div class="logo">
         <img src="../../../src/images/Logo.ico" alt="logo" />
@@ -75,21 +97,21 @@ $resultFut = $stmtFut->get_result();
 
       <ul>
         <li class="nav-item">
-          <a href="pages/user.php">
+          <a href="user.php">
             <i class="fa fa-user nav-icon"></i>
             <span class="nav-text">Cuenta</span>
           </a>
         </li>
 
         <li class="nav-item active">
-          <a href="home.php">
+          <a href="../home.php">
             <i class="fa-solid fa-table nav-icon"></i>
             <span class="nav-text">Tablero</span>
           </a>
         </li>
 
         <li class="nav-item">
-          <a href="pages/formularioFUT.php">
+          <a href="formularioFUT.php">
             <i class="fa fa-arrow-trend-up nav-icon"></i>
             <span class="nav-text">Tramite</span>
           </a>
@@ -134,53 +156,56 @@ $resultFut = $stmtFut->get_result();
       <div class="upcoming-events">
         <h1>Tablero</h1>
 
-        <!-- Para mostrar el fut en el dashboard -->
         <h2>FUTs del Alumno</h2>
-        <div class="fut-container">
-          <?php if ($resultFut->num_rows > 0): ?>
-            <?php while ($rowFut = $resultFut->fetch_assoc()) { ?>
-              <div class="card fut-card">
-                <form class="form-solicitud" action="src/actualizar.php" method="POST" id="miFormulario" enctype="multipart/form-data">
-                  <input type="hidden" name="nroFut" value="<?php echo $rowFut['nroFut']; ?>">
-
-                  <p><strong>Número FUT:</strong> <?php echo $rowFut['nroFut']; ?></p>
-                  <p><strong>Año FUT:</strong> <?php echo $rowFut['anioFut']; ?></p>
-                  <p><strong>Fecha y Hora de Ingreso:</strong> <?php echo $rowFut['fecHorIng']; ?></p>
-                  <p><strong>Solicitud:</strong> <?php echo $rowFut['solicito']; ?></p>
-                  <p><strong>Especialidad:</strong> <?php echo $nomEsp; ?></p>
-                  <p><strong>Estado:</strong>   <!--ESTADOS DE LOS FUTS-->
-                  <?php 
-                  switch ($rowFut['estado']) {
-                      case 'H': 
-                      echo 'Habilitado';break;
-                      case 'A':
-                      echo 'Asignado';
-                      break;
-                    //   case 'D': 
-                    //   echo 'Desaprobado';
-                    //   break;
-                      case 'R': 
-                      echo 'Rechazado';
-                      break;
-                      case 'C': 
-                      echo 'Cerrado';
-                      break;
-                      default: 
+        <div class="fut-info">
+          <?php if (isset($apPaternoSoli)) { ?>
+            <div class="card fut-card">
+              <h2>Detalles del FUT</h2>
+              <p><strong>Numero FUT:</strong> <?php echo $nroFut; ?></p>
+              <p><strong>Año FUT:</strong> <?php echo $anioFut; ?></p>
+              <p><strong>Fecha y Hora de Ingreso:</strong> <?php echo $fecHoraAsignaDocente; ?></p>
+              <p><strong>Solicitante:</strong> <?php echo $nombresSoli . ' ' . $apPaternoSoli . ' ' . $apMaternoSoli; ?></p>
+              <p><strong>Tipo de Documento:</strong> <?php echo $tipoDocu; ?></p>
+              <p><strong>Numero de Documento:</strong> <?php echo $nroDocu; ?></p>
+              <p><strong>Codigo Modular:</strong> <?php echo $codModular; ?></p>
+              <p><strong>Telefono:</strong> <?php echo $telf; ?></p>
+              <p><strong>Celular:</strong> <?php echo $celular; ?></p>
+              <p><strong>Correo Institucional:</strong> <?php echo $correoJP; ?></p>
+              <p><strong>Correo Personal:</strong> <?php echo $correoPersonal; ?></p>
+              <p><strong>Direccion:</strong> <?php echo $direccion; ?></p>
+              <p><strong>Año de Ingreso:</strong> <?php echo $anioIngreso; ?></p>
+              <p><strong>Año de Egreso:</strong> <?php echo $anioEgreso; ?></p>
+              <p><strong>Especialidad:</strong> <?php echo $nomEsp; ?></p>
+              <p><strong>Tipo de Tramite:</strong> <?php echo $descTT; ?></p>
+              <p><strong>Descripcion:</strong> <?php echo $descripcion; ?></p>
+              <p><strong>Estado:</strong> 
+                <?php 
+                  switch ($estado) {
+                    case 'H': 
+                      echo 'Habilitado'; break;
+                    case 'A':
+                      echo 'Asignado'; break;
+                    case 'R': 
+                      echo 'Rechazado'; break;
+                    case 'C': 
+                      echo 'Cerrado'; break;
+                    default: 
                       echo 'Estado desconocido';
-                      }
-                      ?>
-                      </p>
-                </form>
-                <form class="form-detalle" action="pages/verDetalleFut.php" method="POST">
-                    <input type="hidden" name="nroFut" value="<?php echo $rowFut['nroFut']; ?>">
-                    <input type="hidden" name="anioFut" value="<?php echo $rowFut['anioFut']; ?>">
-                    <button type="submit" class="fut-button">VER DETALLE DE FUT</button>
-                </form>
-              </div>
-            <?php } ?>
-          <?php else: ?>
-            <p>No existe ningún FUT con el número especificado.</p>
-          <?php endif; ?>
+                  }
+                ?>
+              </p>
+              <p><strong>Archivo PDF:</strong> 
+                <?php if ($archivo_pdf) { ?>
+                  <a href="../src/<?php echo $archivo_pdf; ?>" target="_blank">Ver Documento</a>
+                <?php } else { ?>
+                  No disponible
+                <?php } ?>
+              </p>
+            </div>
+            <button onclick="history.back()">VOLVER</button>
+          <?php } else { ?>
+            <p>No se encontraron detalles para el FUT especificado.</p>
+          <?php } ?>
         </div>
       </div>
     </div>

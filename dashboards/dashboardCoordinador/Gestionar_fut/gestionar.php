@@ -31,7 +31,7 @@ $rowfut = $resultfut->fetch_assoc();
 $comentario = !empty($rowfut['comentario']) ? $rowfut['comentario'] : 'No hay comentario disponible';
 
 
-// Obtener datos del solicitante
+// Obtener datos del coordinador
 $sqlSolicitante = "SELECT nombres, apPaterno, apMaterno FROM personal WHERE codLogin = ?";
 $stmtSolicitante = $conexion->prepare($sqlSolicitante);
 $stmtSolicitante->bind_param("i", $codCoordinador);
@@ -43,14 +43,33 @@ $nombres = $rowSolicitante['nombres'];
 $apPaterno = $rowSolicitante['apPaterno'];
 $apMaterno = $rowSolicitante['apMaterno'];
 
-$query = "SELECT apPaterno, apMaterno, nombres, tipoDocu, nroDocu, codModular, telf, celular, correoJP, correoPersonal, direccion, anioIngreso, anioEgreso FROM solicitante WHERE codLogin = ?";
+// Consulta para obtener los datos del solicitante y el tipo de trámite basado en nroFut
+$query = "SELECT s.apPaterno, s.apMaterno, s.nombres, s.tipoDocu, s.nroDocu, s.codModular, s.telf, s.celular, s.correoJP, s.correoPersonal, s.direccion, s.anioIngreso, s.anioEgreso, e.nomEsp, f.codTT, f.solicito, f.descripcion, f.fecHoraAsignaDocente, f.estado, f.descCoorCierraFUT, f.archivo_pdf, f.codDocente, tt.descTT
+          FROM solicitante s 
+          INNER JOIN fut f ON s.codLogin = f.codSoli
+          INNER JOIN especialidad e ON s.codEsp = e.codEsp
+          LEFT JOIN tipoTramite tt ON f.codTT = tt.codTT
+          WHERE f.nroFut = ?;";
+
 $stmt = mysqli_prepare($conexion, $query);
-mysqli_stmt_bind_param($stmt, 'i', $codLogin);
+mysqli_stmt_bind_param($stmt, 'i', $nroFut);
 mysqli_stmt_execute($stmt);
-mysqli_stmt_bind_result($stmt, $apPaterno, $apMaterno, $nombres, $tipoDocu, $nroDocu, $codModular, $telf, $celular, $correoJP, $correoPersonal, $direccion, $anioIngreso, $anioEgreso);
+mysqli_stmt_bind_result($stmt, $apPaternoSoli, $apMaternoSoli, $nombresSoli, $tipoDocu, $nroDocu, $codModular, $telf, $celular, $correoJP, $correoPersonal, $direccion, $anioIngreso, $anioEgreso, $nomEsp, $codTTSeleccionado, $solicito, $descripcion, $fecHoraAsignaDocente,$estado, $desCoorCierraFUT, $archivo_pdf, $codDocente, $descTT);
 mysqli_stmt_fetch($stmt);
 mysqli_stmt_close($stmt);
 
+
+//Obtener datos de Docente
+$sqlDocente = "SELECT nombres, apPaterno, apMaterno FROM personal WHERE codLogin = ?";
+$stmtDocente = $conexion->prepare($sqlDocente);
+$stmtDocente->bind_param("i", $codDocente);
+$stmtDocente->execute();
+$resultDocente = $stmtDocente->get_result();
+$rowDocente = $resultDocente->fetch_assoc();
+
+$nombresDocente = $rowDocente['nombres'];
+$apPaternoDocente = $rowDocente['apPaterno'];
+$apMaternoDocente = $rowDocente['apMaterno'];
 ?>
 
 <!DOCTYPE html>
@@ -139,9 +158,20 @@ mysqli_stmt_close($stmt);
 
         <div class="fut-info">
           <p><strong>Número FUT:</strong> <?php echo htmlspecialchars($_POST['nroFut']); ?></p>
-          <p><strong>Año FUT:</strong> <?php echo htmlspecialchars($_POST['anioFut']); ?></p>
           <p><strong>Fecha y Hora de Ingreso:</strong> <?php echo htmlspecialchars($_POST['fecHorIng']); ?></p>
+          <p><strong>Año FUT:</strong> <?php echo htmlspecialchars($_POST['anioFut']); ?></p>
+          <p><strong>Solicitante:</strong> <?php echo $nombresSoli . ' ' . $apPaternoSoli . ' ' . $apMaternoSoli; ?></p>
+          <p><strong>Area Académica:</strong> <?php echo $nomEsp; ?></p>
+          <p><strong>Tipo de trámite:</strong>
+
+                        <?php if (!empty($descTT)): ?>
+                                <?php echo $descTT; ?>
+                        <?php else: ?>
+                            No hay tipo tramite asignado, debe resolverse en la base de datos.
+                        <?php endif; ?></p>
           <p><strong>Solicitud:</strong> <?php echo htmlspecialchars($_POST['solicito']); ?></p>
+          <p><strong>Detalle:</strong> <?php echo $descripcion; ?></p>
+          <?php if(empty($fecHoraAsignaDocente)){ ?><p><strong>Docente asignado:</strong> Sin asignar</p><?php }else{?> <p><strong>Docente asignado:</strong> <?php echo $nombresDocente . ' ' . $apPaternoDocente . ' ' . $apMaternoDocente; ?></p> <?php } ?>
           <p><strong>Estado:</strong>
                   <?php
                     switch ($estado) {
@@ -151,8 +181,8 @@ mysqli_stmt_close($stmt);
                       case 'A':
                         echo 'Aprobado';
                         break;
-                      case 'D':
-                        echo 'Desaprobado';
+                    //   case 'D':
+                    //     echo 'Desaprobado';
                         break;
                       case 'R':
                         echo 'Rechazado';
@@ -165,8 +195,14 @@ mysqli_stmt_close($stmt);
                     }
                   ?>
                 </p>
-          <p><strong>Coordinador:</strong> <?php echo $nombres . ' ' . $apPaterno; ?></p>
-          <p><strong>Comentario:</strong> <?php echo htmlspecialchars($comentario); ?></p>
+          <p><strong>Comentario:</strong> <?php echo $comentario; ?></p>
+                        <p><strong>Documento: </strong>
+
+                        <?php if (!empty($archivo_pdf)): ?>
+                                <a href="../../dashboardDocente/pages/uploads/<?php echo $archivo_pdf; ?>" target="_blank">Abrir archivo</a>
+                        <?php else: ?>
+                            No hay documento subido
+                        <?php endif; ?></p>
         </div>
 
         <form action="procesar_gestion.php" method="post">
@@ -179,77 +215,38 @@ mysqli_stmt_close($stmt);
           <input type="hidden" name="comentario" value="<?php echo htmlspecialchars($comentario); ?>">
           
           <br>
-        <div class="form-group">
-            <label for="Coordescripcion"><strong>Descripcion</strong></label>
-            <textarea id="Coordescripcion" name="Coordescripcion" rows="4" cols="50" placeholder="Ingrese una descripcion"></textarea>
-        </div>
-          
-          <div class="button-row">
             <div class="form-group">
-                <button type="submit" class="fut-button" name="accion" value="cerrar">Cerrar FUT</button>
-                <button type="submit" class="fut-button" name="accion" value="rechazar">Rechazar FUT</button>
-                <button type="button" class="btn-cancel" onclick="window.location.href='../../dashboardCoordinador/home.php';">Cancelar</button>
+                <label for="Coordescripcion"><strong>Descripcion</strong></label>
+                <textarea id="Coordescripcion" name="Coordescripcion" rows="4" cols="50" placeholder="Ingrese una descripcion"><?php echo htmlspecialchars($desCoorCierraFUT ?? '')?></textarea>
             </div>
-          </div>
+          
+            <div class="button-row">
+                <div class="form-group">
+                    <button type="submit" class="fut-button" name="accion" value="cerrar" id="cerrarBtn" disabled>Cerrar FUT</button>
+                    <button type="submit" class="fut-button" name="accion" value="rechazar" id="rechazarBtn" disabled>Rechazar FUT</button>
+                    <button type="button" class="btn-cancel" onclick="window.location.href='../../dashboardCoordinador/home.php';">Cancelar</button>
+                </div>
+            </div>
         </form>
       </div>
     </div>
     
-    <div class="right-content">
-      <div class="interaction-control interactions">
-        <i class="fa-regular fa-envelope notified"></i>
-        <i class="fa-regular fa-bell notified"></i>
-        <div class="toggle" onclick="switchTheme()">
-          <div class="mode-icon moon">
-            <i class="bx bxs-moon"></i>
-          </div>
-          <div class="mode-icon sun hidden">
-            <i class="bx bxs-sun"></i>
-          </div>
-        </div>
-      </div>
-
-      <div class="analytics">
-        <h1>Analisis</h1>
-        <div class="analytics-container">
-          <div class="total-events">
-            <div class="event-number card">
-              <h2>Aprobados</h2>
-              <p>1</p>
-              <i class="bx bx-check-circle"></i>
-            </div>
-            <div class="event-number card">
-              <h2>Pendientes</h2>
-              <p>2</p>
-              <i class="bx bx-timer"></i>
-            </div>
-          </div>
-
-          <div class="chart" id="doughnut-chart">
-            <h2>Porcentaje del Tramite</h2>
-            <canvas id="doughnut"></canvas>
-            <ul></ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="contacts">
-        <h1>Contactos</h1>
-        <div class="contacts-container">
-          <div class="contact-status">
-            <div class="contact-activity">
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/7816/7816916.png"
-                alt="User Icon" />
-              <p>Usuario <span><a target="_blank"
-                    href="https://github.com/Alonso-dev651/EFSRT">Developer</a></span></p>
-            </div>
-            <small>1 hour ago</small>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!--SE BORRO LA SECCION ESA DEL CIRCULO, A PEDIDO DEL TICHER-->
   </section>
-</body>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const textarea = document.getElementById("Coordescripcion");
+            const cerrarBtn = document.getElementById("cerrarBtn");
+            const rechazarBtn = document.getElementById("rechazarBtn");
+            function checkTextarea() {
+                const hasText = textarea.value.trim().length > 0;
+                cerrarBtn.disabled = !hasText;
+                rechazarBtn.disabled = !hasText;
+            }
+            checkTextarea();
+            textarea.addEventListener("input", checkTextarea);
+        });
+    </script>
 
+</body>
 </html>

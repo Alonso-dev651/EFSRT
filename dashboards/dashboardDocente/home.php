@@ -109,13 +109,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nroFut'])) {
         </li>
 
         <li class="nav-item">
-          <a href="pages/formularioFUT.php">
-            <i class="fa fa-arrow-trend-up nav-icon"></i>
-            <span class="nav-text">Tramites</span>
-          </a>
-        </li>
-
-        <li class="nav-item">
           <a href="pages/estado.php">
             <i class="fa-solid fa-chart-simple nav-icon"></i>
             <span class="nav-text">Estado</span>
@@ -186,6 +179,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nroFut'])) {
                   <input type="hidden" name="solicito" value="<?php echo $rowFut['solicito']; ?>">
                   <input type="hidden" name="estado" value="<?php echo $rowFut['estado']; ?>">
                   <button type="submit" class="fut-button">Revisar FUT</button>
+                </form>
+                
+                <form action="asignarFormato.php" method="post">
+                    <input type="hidden" name="nroFut" value="<?php echo $rowFut['nroFut']; ?>">
+                    <label for="formato">Seleccionar formato:</label>
+                    <select name="nroForm" required>
+                        <?php
+                        $nroFut = $rowFut['nroFut'];
+                        $sqlEspecialidad = "SELECT codEsp FROM fut WHERE nroFut = ?";
+                        $stmtEsp = $conexion->prepare($sqlEspecialidad);
+                        $stmtEsp->bind_param("i", $nroFut);
+                        $stmtEsp->execute();
+                        $resultEsp = $stmtEsp->get_result();
+                    
+                        if ($resultEsp->num_rows > 0) {
+                            $rowEsp = $resultEsp->fetch_assoc();
+                            $codEsp = $rowEsp['codEsp'];
+                    
+                            // Consultar formatos activos
+                            $sqlFormatos = "SELECT nroForm, descForm 
+                                            FROM formatos 
+                                            WHERE codEsp = ? AND estado = 'H'";
+                            $stmtFormatos = $conexion->prepare($sqlFormatos);
+                            $stmtFormatos->bind_param("i", $codEsp);
+                            $stmtFormatos->execute();
+                            $resultFormatos = $stmtFormatos->get_result();
+                    
+                            // Verificar si hay formatos disponibles
+                            if ($resultFormatos->num_rows > 0) {
+                                while ($formato = $resultFormatos->fetch_assoc()) {
+                                    echo "<option value='{$formato['nroForm']}'>{$formato['descForm']}</option>";
+                                }
+                            } else {
+                                echo "<option value=''>No hay formatos disponibles</option>";
+                            }
+                    
+                            $stmtFormatos->close();
+                        } else {
+                            echo "<option value=''>No hay formatos disponibles</option>";
+                        }
+                    
+                        $stmtEsp->close();
+                        ?>
+                    </select>
+                    <button type="submit">Asignar Formato</button>
                 </form>
               </div>
             <?php endforeach; ?>

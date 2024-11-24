@@ -66,6 +66,7 @@ try {
             mysqli_stmt_close($stmt);
 
             echo "Formulario actualizado sin cambio de archivo.";
+            echo '<a href="../home.php">Volver</a>';
         }
     } else {
         throw new Exception("M¨¦todo de solicitud no permitido.");

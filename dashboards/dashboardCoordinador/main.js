@@ -168,6 +168,8 @@ new Chart(chart, {
   },
 });
 
+
+
 function population() {
   chartData.labels.forEach((label, i) => {
     let eachEvent = document.createElement("li");
@@ -177,6 +179,7 @@ function population() {
 }
 
 population();
+
 
 
 let currentFutIndex = 0;

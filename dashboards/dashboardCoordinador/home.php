@@ -20,7 +20,7 @@ $searchTerm = isset($_POST['search']) ? trim($_POST['search']) : '';
 $estado = isset($_POST['estado']) ? $_POST['estado'] : ''; // Recibir el estado seleccionado
 
 // Consulta para obtener los datos del FUT con o sin filtro de busqueda y aplicando los filtros adicionales
-$sqlFut = "SELECT f.nroFut, f.anioFut, f.fecHorIng, f.solicito, f.estado, s.codEsp, f.codCoordinador
+$sqlFut = "SELECT f.nroFut, f.anioFut, f.fecHorIng, f.solicito, f.estado, s.codEsp, f.codCoordinador, s.nombres, s.apPaterno, s.apMaterno
            FROM fut f
            JOIN solicitante s ON f.codSoli = s.codLogin
            JOIN personal p ON p.codLogin = ?
@@ -156,7 +156,6 @@ $resultFut = $stmtFut->get_result();
                   <option value="" disabled selected>Seleccionar estado</option>
                   <option value="H" <?php echo (isset($_POST['estado']) && $_POST['estado'] == 'H') ? 'selected' : ''; ?>>Habilitado</option>
                   <option value="A" <?php echo (isset($_POST['estado']) && $_POST['estado'] == 'A') ? 'selected' : ''; ?>>Aprobado</option>
-                  <option value="D" <?php echo (isset($_POST['estado']) && $_POST['estado'] == 'D') ? 'selected' : ''; ?>>Desaprobado</option>
                   <option value="R" <?php echo (isset($_POST['estado']) && $_POST['estado'] == 'R') ? 'selected' : ''; ?>>Rechazado</option>
                   <option value="C" <?php echo (isset($_POST['estado']) && $_POST['estado'] == 'C') ? 'selected' : ''; ?>>Cerrado</option>
                 </select>
@@ -183,6 +182,7 @@ $resultFut = $stmtFut->get_result();
                 <p><strong>Número FUT:</strong> <?php echo $rowFut['nroFut']; ?></p>
                 <p><strong>Año FUT:</strong> <?php echo $rowFut['anioFut']; ?></p>
                 <p><strong>Fecha y Hora de Ingreso:</strong> <?php echo $rowFut['fecHorIng']; ?></p>
+                <p><strong>Nombre del Solicitante:</strong> <?php echo htmlspecialchars($rowFut['nombres'] . ' ' . $rowFut['apPaterno'] . ' ' . $rowFut['apMaterno']); ?></p>
                 <p><strong>Solicitud:</strong> <?php echo $rowFut['solicito']; ?></p>
                 <p><strong>Estado:</strong>
                   <?php
@@ -193,9 +193,9 @@ $resultFut = $stmtFut->get_result();
                     case 'A':
                       echo 'Aprobado';
                       break;
-                    case 'D':
-                      echo 'Desaprobado';
-                      break;
+                    // case 'D':
+                    //   echo 'Desaprobado';
+                    //   break;
                     case 'R':
                       echo 'Rechazado';
                       break;

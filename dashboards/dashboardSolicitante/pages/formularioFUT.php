@@ -101,12 +101,14 @@ mysqli_stmt_close($stmt);
                     <div>
                         <p>Fecha: <span id="current-date"></span></p>
                         <p>Hora: <span id="current-time"></span></p>
+                        
                     </div>
+                              <p>Nro de FUT: <?php echo 'ASD'.$nroFut; ?></p>
                 </div>
 
                 <div class="input-row">
                     <div class="form-group">
-                        <label for="apPaterno">Apellido Paterno</label>
+                        <label for="apPaterno">Apellido Patddderno</label>
                         <input class="input_form" type="text" id="apPaterno" name="apPaterno" value="<?php echo $apPaterno; ?>" required>
                     </div>
 
@@ -189,7 +191,15 @@ mysqli_stmt_close($stmt);
                         <input class="input_form" type="number" id="anioEgreso" name="anioEgreso" value="<?php echo $anioEgreso; ?>">
                     </div>
                 </div>
-
+                    <div class="input-row">
+                        <div class="form-group">
+                            <label for="tipoTramite">Tipo de Tramite</label>
+                            <select id="tipoTramite" name="tipoTramite" required>
+                                <option value="" disabled selected>Tramites</option>
+                                <?php include '../src/php/mostrar_tipoTramites.php'; ?>
+                            </select>
+                        </div>
+                    </div>
                 <!-- Campo para subir archivo -->
                 <div class="form-group">
                     <label for="archivo">Subir Archivo</label>
@@ -199,12 +209,12 @@ mysqli_stmt_close($stmt);
                 <!-- Solicitud -->
                 <div class="form-group">
                     <label for="solicitud">Solicitud</label>
-                    <textarea class="solicitud" name="solicitud" id="solicitud"></textarea>
+                    <textarea class="solicitud" name="solicitud" id="solicitud" required></textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="descripcion">Descripción de Solicitud</label>
-                    <textarea class="descripcion" name="descripcion" id="descripcion"></textarea>
+                    <textarea class="descripcion" name="descripcion" id="descripcion" required></textarea>
                 </div>
 
                 <button type="submit">Enviar Solicitud</button>

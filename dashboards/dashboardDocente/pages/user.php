@@ -93,13 +93,6 @@ $apMaterno = $rowDocente['apMaterno'];
           </a>
         </li>
 
-        <li class="nav-item">
-          <a href="formularioFUT.php">
-            <i class="fa fa-arrow-trend-up nav-icon"></i>
-            <span class="nav-text">Tramite</span>
-          </a>
-        </li>
-
         <li class="nav-item ">
           <a href="estado.php">
             <i class="fa-solid fa-chart-simple nav-icon"></i>
